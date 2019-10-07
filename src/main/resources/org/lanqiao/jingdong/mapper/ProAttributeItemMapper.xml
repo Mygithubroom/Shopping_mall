@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lanqiao.jingdong.mapper.ProAttributeItemMapper" >
+  <resultMap id="BaseResultMap" type="org.lanqiao.jingdong.entity.ProAttributeItem" >
+    <id column="attribute_item_id" property="attributeItemId" jdbcType="INTEGER" />
+    <result column="attribute_id" property="attributeId" jdbcType="INTEGER" />
+    <result column="attr_item_name" property="attrItemName" jdbcType="VARCHAR" />
+    <result column="attr_item_sort" property="attrItemSort" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    attribute_item_id, attribute_id, attr_item_name, attr_item_sort
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pro_attribute_item
+    where attribute_item_id = #{attributeItemId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pro_attribute_item
+    where attribute_item_id = #{attributeItemId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lanqiao.jingdong.entity.ProAttributeItem" >
+    insert into pro_attribute_item (attribute_item_id, attribute_id, attr_item_name, 
+      attr_item_sort)
+    values (#{attributeItemId,jdbcType=INTEGER}, #{attributeId,jdbcType=INTEGER}, #{attrItemName,jdbcType=VARCHAR}, 
+      #{attrItemSort,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lanqiao.jingdong.entity.ProAttributeItem" >
+    insert into pro_attribute_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="attributeItemId != null" >
+        attribute_item_id,
+      </if>
+      <if test="attributeId != null" >
+        attribute_id,
+      </if>
+      <if test="attrItemName != null" >
+        attr_item_name,
+      </if>
+      <if test="attrItemSort != null" >
+        attr_item_sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="attributeItemId != null" >
+        #{attributeItemId,jdbcType=INTEGER},
+      </if>
+      <if test="attributeId != null" >
+        #{attributeId,jdbcType=INTEGER},
+      </if>
+      <if test="attrItemName != null" >
+        #{attrItemName,jdbcType=VARCHAR},
+      </if>
+      <if test="attrItemSort != null" >
+        #{attrItemSort,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lanqiao.jingdong.entity.ProAttributeItem" >
+    update pro_attribute_item
+    <set >
+      <if test="attributeId != null" >
+        attribute_id = #{attributeId,jdbcType=INTEGER},
+      </if>
+      <if test="attrItemName != null" >
+        attr_item_name = #{attrItemName,jdbcType=VARCHAR},
+      </if>
+      <if test="attrItemSort != null" >
+        attr_item_sort = #{attrItemSort,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where attribute_item_id = #{attributeItemId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lanqiao.jingdong.entity.ProAttributeItem" >
+    update pro_attribute_item
+    set attribute_id = #{attributeId,jdbcType=INTEGER},
+      attr_item_name = #{attrItemName,jdbcType=VARCHAR},
+      attr_item_sort = #{attrItemSort,jdbcType=VARCHAR}
+    where attribute_item_id = #{attributeItemId,jdbcType=INTEGER}
+  </update>
+</mapper>

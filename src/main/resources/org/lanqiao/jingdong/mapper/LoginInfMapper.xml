@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lanqiao.jingdong.mapper.LoginInfMapper" >
+  <resultMap id="LoginInfResultMap" type="org.lanqiao.jingdong.entity.LoginInf" >
+    <id column="login_id" property="loginId" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="phone_num" property="phoneNum" jdbcType="BIGINT" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    login_id, username, password, phone_num, email, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="LoginInfResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from login_inf
+    where login_id = #{loginId,jdbcType=INTEGER}
+  </select>
+  <select id="samePhone" resultType="java.lang.Integer" parameterType="java.math.BigInteger">
+    select count(*) from login_inf where phone_Num=#{phoneNum}
+  </select>
+  <select id="sameUsername" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(*) from login_inf where username=#{username}
+  </select>
+  <select id="checkuser" resultMap="LoginInfResultMap" parameterType="org.lanqiao.jingdong.entity.LoginInf">
+    select
+    <include refid="Base_Column_List" />
+    from login_inf
+    <where>
+      <choose>
+        <when test="email !='' and email !=null ">
+          email=#{email} and password=#{password}
+        </when>
+        <when test="phoneNum !=''and phoneNum!=null ">
+          and phone_num=#{phoneNum} and password=#{password}
+        </when>
+        <otherwise>
+          and username=#{username} and password=#{password}
+        </otherwise>
+      </choose>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from login_inf
+    where login_id = #{loginId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lanqiao.jingdong.entity.LoginInf" >
+    insert into login_inf (login_id, username, password, 
+      phone_num, email, status
+      )
+    values (#{loginId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{phoneNum,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.lanqiao.jingdong.entity.LoginInf" useGeneratedKeys="true" keyProperty="loginId">
+    insert into login_inf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="loginId != null" >
+        login_id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="phoneNum != null" >
+        phone_num,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="loginId != null" >
+        #{loginId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNum != null" >
+        #{phoneNum,jdbcType=BIGINT},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lanqiao.jingdong.entity.LoginInf" >
+    update login_inf
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNum != null" >
+        phone_num = #{phoneNum,jdbcType=BIGINT},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where login_id = #{loginId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lanqiao.jingdong.entity.LoginInf" >
+    update login_inf
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone_num = #{phoneNum,jdbcType=BIGINT},
+      email = #{email,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where login_id = #{loginId,jdbcType=INTEGER}
+  </update>
+</mapper>

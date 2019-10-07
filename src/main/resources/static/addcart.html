@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        【丹尼尔惠灵顿石英男表】丹尼尔惠灵顿（DanielWellington）DW手表 男表40mm表盘皮表带超薄石英表（DW00100007）七夕情人节礼物【行情 报价 价格 评测】-京东
+    </title>
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/jquery.validate.js"></script>
+    <script src="js/jquery.validate.regex.js"></script>
+    <script src="js/vue.min.js"></script>
+    <link href="css/addcart2.css" rel="stylesheet">
+    <link href="css/addcart1.css" rel="stylesheet">
+    <script>
+        $(function () {
+            var productId;
+            productId = sessionStorage.getItem("productId");
+            var vInfo = new Vue({
+                el: "#product-intr",
+                data: {
+                    infos: [],
+                    productCount:1,
+                    pics: []
+                },
+                methods:{
+                    btnAdd:function () {
+                        this.productCount++;
+                    },
+                    btnReduce:function () {
+                        if (this.productCount>1)
+                            this.productCount--;
+                    }
+                }
+            });
+            $.ajax({
+                url: "/getInfo",
+                type: "post",
+                dataType: "json",
+                data: {"id": productId},
+                success: function (data) {
+                    vInfo.infos = data;
+                }
+            });
+            $.ajax({
+                url: "/getPic",
+                type: "post",
+                dataType: "json",
+                data: {"id": productId},
+                success: function (data) {
+                    vInfo.pics = data;
+                }
+            });
+            $("#initCart").click(function () {
+                $.ajax({
+                    url: "/addCart",
+                    data: {
+                        // loginId:1,
+                        // productId:1,
+                        productCount:vInfo.productCount
+                    },
+                    dataType: "text",
+                    type: "post",
+                    // contentType: "application/json;charset-UTF-8",
+                    success: function (text) {
+                        alert(text);
+                    }
+                });
+            });
+
+
+            var searchForm=new Vue({
+               el:"#key-text" ,
+                data:{
+                   search_text:""
+                }
+            });
+            $("#button1").click(function () {
+                sessionStorage.setItem("searchText",searchForm.search_text);
+                window.open("http://localhost:8080/search.html");
+            });
+            $("#a").mousemove(function () {
+                vInfo.pics.mainPicUrl= "//img13.360buyimg.com/n1/jfs/t21898/4/2691687253/67690/6eb1179d/5b6163fbN3f89dca4.jpg"
+            });
+            $("#b").mousemove(function () {
+                vInfo.pics.mainPicUrl= "//img13.360buyimg.com/n1/jfs/t22336/158/2707502334/62654/4b68229d/5b61640cN9da5dd84.jpg"
+            });
+            $("#c").mousemove(function () {
+                vInfo.pics.mainPicUrl= "//img13.360buyimg.com/n1/jfs/t21559/293/2729485167/88795/419e82af/5b61640fNc6a4a725.jpg"
+            });
+            $("#d").mousemove(function () {
+                vInfo.pics.mainPicUrl= "//img13.360buyimg.com/n1/jfs/t23713/204/1434912774/74463/2e12b4e5/5b61641eN71814857.jpg"
+            });
+            $("#e").mousemove(function () {
+                vInfo.pics.mainPicUrl= "//img13.360buyimg.com/n1/jfs/t20647/317/2751795361/92435/977a5605/5b61645eNb2f3ae52.jpg"
+            });
+            $("#spec-img").mouseover(function () {
+                if (vInfo.pics.mainPicUrl == "//img13.360buyimg.com/n1/jfs/t21898/4/2691687253/67690/6eb1179d/5b6163fbN3f89dca4.jpg"){
+                    $("#detail-img").css("background-image","url(//img13.360buyimg.com//n0/jfs/t21898/4/2691687253/67690/6eb1179d/5b6163fbN3f89dca4.jpg)");
+                    $("#detail-img").show();
+                }
+                if (vInfo.pics.mainPicUrl == "//img13.360buyimg.com/n1/jfs/t22336/158/2707502334/62654/4b68229d/5b61640cN9da5dd84.jpg"){
+                    $("#detail-img").css("background-image","url(//img13.360buyimg.com//n0/jfs/t22336/158/2707502334/62654/4b68229d/5b61640cN9da5dd84.jpg");
+                    $("#detail-img").show();
+                }
+                if (vInfo.pics.mainPicUrl == "//img13.360buyimg.com/n1/jfs/t21559/293/2729485167/88795/419e82af/5b61640fNc6a4a725.jpg"){
+                    $("#detail-img").css("background-image","url(//img13.360buyimg.com//n0/jfs/t21559/293/2729485167/88795/419e82af/5b61640fNc6a4a725.jpg)");
+                    $("#detail-img").show();
+                }
+                if (vInfo.pics.mainPicUrl == "//img13.360buyimg.com/n1/jfs/t23713/204/1434912774/74463/2e12b4e5/5b61641eN71814857.jpg"){
+                    $("#detail-img").css("background-image","url(//img13.360buyimg.com//n0/jfs/t23713/204/1434912774/74463/2e12b4e5/5b61641eN71814857.jpg)");
+                    $("#detail-img").show();
+                }
+                if (vInfo.pics.mainPicUrl == "//img13.360buyimg.com/n1/jfs/t20647/317/2751795361/92435/977a5605/5b61645eNb2f3ae52.jpg"){
+                    $("#detail-img").css("background-image","url(//img13.360buyimg.com//n0/jfs/t20647/317/2751795361/92435/977a5605/5b61645eNb2f3ae52.jpg)");
+                    $("#detail-img").show();
+                }
+            });
+            $("#spec-img").mouseout(function () {
+                $("#detail-img").css("display","none");
+            })
+        });
+    </script>
+</head>
+<body id="top">
+<div id="shortcut">
+    <div class="w" role="navigation" aria-label="顶部导航" tabindex="0">
+        <ul class="fl">
+            <li id="ttbar-home">
+                <i class="iconfont"></i>
+                <a href="#">京东首页</a>
+            </li>
+            <li>
+                <div id="dt">
+                    <div id="dt_t">
+                        <i class="iconfont"></i>
+                        <span id="areamini" title="福建">福建</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ul class="fr">
+            <li class="fore1">
+                <div id="ttbar-login">
+                    <a href="#">你好，请登录</a>
+                    <!--                    &nbsp;&nbsp;-->
+                    <a href="#" class="red">免费注册</a>
+                </div>
+            </li>
+            <li class="spacer"></li>
+            <li class="fore2">
+                <div class="dt2">
+                    <a href="#" target="_blank">我的订单</a>
+                </div>
+            </li>
+            <li class="spacer"></li>
+            <li class="fore3">
+                <div>
+                    <a href="#" target="_blank">我的京东</a>
+                    <i class="iconfont"></i>
+                </div>
+            </li>
+            <li class="spacer"></li>
+            <li class="fore2">
+                <div class="dt2">
+                    <a href="#" target="_blank">京东会员</a>
+                </div>
+            </li>
+            <li class="spacer"></li>
+            <li class="fore3">
+                <div>
+                    <a href="#" target="_blank">企业采购</a>
+                    <i class="iconfont"></i>
+                </div>
+            </li>
+            <li class="spacer"></li>
+            <li class="fore3">
+                <div>
+                    <a href="#" target="_blank">客户服务</a>
+                    <i class="iconfont"></i>
+                </div>
+            </li>
+            <li class="spacer"></li>
+            <li class="fore3">
+                <div>
+                    <a href="#" target="_blank">网站导航</a>
+                    <i class="iconfont"></i>
+                </div>
+            </li>
+            <li class="spacer"></li>
+            <li class="fore2_1">
+                <div class="dt2">
+                    <a href="#" target="_blank">手机京东</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="w1">
+    <div id="logo-2014">
+        <div id="logo-img">
+            <a href="#"><img src="images/addcart/logo.png"></a>
+        </div>
+        <div id="logo-txt">
+            <div id="cw-icon">
+                <a href="#">全部分类></a>
+            </div>
+        </div>
+    </div>
+    <div id="search-2014">
+        <div id="search-form">
+            <div id="s-text">
+                <input type="text" id="key-text" v-model="search_text">
+            </div>
+            <div>
+                <button id="button1" value="搜全站">搜全站</button>
+            </div>
+            <div>
+                <button id="button2" value="搜本店">搜本店</button>
+            </div>
+        </div>
+    </div>
+    <div id="settleup">
+        <div id="shopping-car">
+            <div id="ci-left1">
+                <i class="ci-left"></i>
+            </div>
+            <div id="my-car">
+                <a href="#">我的购物车<sup id="shopping-amount">0</sup></a>
+            </div>
+            <div id="ci-right1"><i class="ci-right">&gt;</i></div>
+        </div>
+    </div>
+    <div id="hotwords">
+        <a href="#">欧米茄</a>
+        <a href="#">泰格豪雅</a>
+        <a href="#">卡西欧</a>
+        <a href="#">CK手表</a>
+        <a href="#">天王</a>
+        <a href="#">万国</a>
+        <a href="#">天梭</a>
+    </div>
+</div>
+<div id="line-1"></div>
+<div id="shop-head">
+    <div id="img">
+        <img src="//img12.360buyimg.com/cms/jfs/t5599/291/6783267381/13844/8abfac88/596c7f87N8cfb4ab0.jpg">
+    </div>
+    <div id="mc">
+        <div id="mc-list">
+            <ul>
+                <li><a href="#" id="main-list1">首页</a></li>
+                <li id="main-list3"><a href="#" id="main-list2">全部分类》</a></li>
+                <li><a href="#" class="main-list2">新品首发</a></li>
+                <li><a href="#" class="main-list2">优雅女表</a></li>
+                <li><a href="#" class="main-list2">绅士男表</a></li>
+                <li><a href="#" class="main-list2">情侣专属</a></li>
+                <li><a href="#" class="main-list2">臻美手镯</a></li>
+                <li><a href="#" class="main-list2">品牌故事</a></li>
+                <li><a href="#" class="main-list2">常见问题</a></li>
+            </ul>
+            <div id="s-form">
+                <form id="form-body">
+                    <div>
+                        <input type="text" id="s-inp">
+                    </div>
+                    <div>
+                        <a href="#"><input type="button" value="搜索" id="s-submit"></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="crumb-wrap">
+    <div id="crumb">
+        <div id="crumb-fl">
+            <div class="item_1">
+                <a href="#">钟表</a>
+            </div>
+            <div class="sep">
+                >
+            </div>
+            <div class="item_1">
+                <a href="#">腕表</a>
+            </div>
+            <div class="sep">
+                >
+            </div>
+            <div class="item_2">
+                <a href="#">欧美表</a>
+            </div>
+            <div class="sep">
+                >
+            </div>
+            <div class="item_3">
+                <a href="#">丹尼尔惠灵顿（DanielWellington）</a>
+            </div>
+            <div class="sep">
+                >
+            </div>
+            <div class="item_4">
+                丹尼尔惠灵顿石英男表
+            </div>
+        </div>
+        <div id="crumb-fr">
+            <div id="goodshop">
+                <a href="#"><em>自营</em></a>
+            </div>
+            <div id="j-hove">
+                <div id="name">
+                    <a href="#">丹尼尔惠灵顿京东自营旗舰店</a>
+                </div>
+                <div id="im-button">
+                    <i class="sprite-im"></i>
+                    <a href="#">联系客服</a>
+                </div>
+                <div id="follow-shop">
+                    <i class="sprite-follow"></i>
+                    <span>
+                        <a href="#">关注店铺</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="w2">
+    <div id="product-intr">
+        <div id="preview-wrap">
+            <div id="preview">
+                <div id="spec-n1">
+                    <div id="spec-img">
+                        <img :src="pics.mainPicUrl" class="spec-img">
+                    </div>
+                </div>
+                <div id="spec-list">
+                    <div id="spec-forward">
+                        <a href="#none"><i><</i></a>
+                    </div>
+                    <div id="spec-items">
+                        <ul>
+                            <li class="img-list" id="a">
+                                <div class="list">
+                                    <img :src="pics.littlePicUrl">
+                                </div>
+                            </li>
+                            <li class="img-list" id="b">
+                                <div class="list">
+                                    <img src="//img13.360buyimg.com/n5/jfs/t22336/158/2707502334/62654/4b68229d/5b61640cN9da5dd84.jpg">
+                                </div>
+                            </li>
+                            <li class="img-list" id="c">
+                                <div class="list">
+                                    <img src="//img13.360buyimg.com/n5/jfs/t21559/293/2729485167/88795/419e82af/5b61640fNc6a4a725.jpg">
+                                </div>
+                            </li>
+                            <li class="img-list" id="d">
+                                <div class="list">
+                                    <img src="//img13.360buyimg.com/n5/jfs/t23713/204/1434912774/74463/2e12b4e5/5b61641eN71814857.jpg">
+                                </div>
+                            </li>
+                            <li class="img-list1" id="e">
+                                <div class="list">
+                                    <img src="//img13.360buyimg.com/n5/jfs/t20647/317/2751795361/92435/977a5605/5b61645eNb2f3ae52.jpg">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="spec-backward">
+                        <a href="#none"><i>></i></a>
+                    </div>
+                </div>
+                <div id="pre-info">
+                    <div id="left-btns">
+                        <div id="j-follow">
+                            <a href="#">
+                                <i class="sprite-follow-sku"></i>
+                                <em>关注</em>
+                            </a>
+                        </div>
+                        <div id="j-share">
+                            <a href="#">
+                                <i class="sprite-share"></i>
+                                <em>分享</em>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="right-btns">
+                        <div id="right-item">
+                            <a href="#">举报</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="detail-img"></div>
+        <div id="itemInfo">
+            <div id="sku-name">
+                <div id="sku-name-text">
+                    {{infos.productName}}
+                </div>
+            </div>
+            <div id="p-ad">
+                【8月2日16点DW特价秒杀】到手价：1139，活动仅限24小时！部分款买1赠2数量有限（仅限8月2日）！
+                <a href="#"><u>点击立抢</u></a>
+            </div>
+            <div id="summary-first">
+                <div id="summary-price-wrap">
+                    <div id="summary-price">
+                        <div id="jingdongjia">
+                            京 东 价
+                        </div>
+                        <div id="jiangjia">
+                            <span id="jiangjia1">￥</span>
+                            <span id="jiangjia2">{{infos.price}}</span>
+                            <a href="#">降价通知</a>
+                        </div>
+                    </div>
+                    <div id="summary-quan">
+                        <div id="youhuiquan">
+                            优 惠 券
+                        </div>
+                        <div id="youhuiquan1">
+                                <span class="quan-item">
+                                    <s></s>
+                                    <b></b>
+                                    <span>满800减50</span>
+                                </span>
+                            <span class="quan-item">
+                                    <s></s>
+                                    <b></b>
+                                    <span>满399减20</span>
+                                </span>
+                        </div>
+                    </div>
+                    <div id="summary-promotion">
+                        <div id="cuxiao">
+                            促&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;销
+                        </div>
+                        <div id="p-promotion">
+                            <div id="prom-item">
+                                <em>限购</em>
+                                购买1-5件时享受单件价￥1490，超出数量以结算价为准，仅限购买一次
+                            </div>
+                            <div id="prom-quan">
+                                <em>满额返券</em>
+                                买DW手表满99元返50元表带满减券
+                                <a href="#">详情 >></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="choose-wrap">
+                <div id="summary-support">
+                    <div id="zengzhi">
+                        增值业务
+                    </div>
+                    <div id="giftbuy">
+                        礼品包装
+                    </div>
+                </div>
+                <div id="summary-stock">
+                    <div id="peisong">
+                        配 送 至
+                    </div>
+                    <div id="ui-area">
+                        福建厦门市集美区灌口镇>
+                    </div>
+                    &nbsp;&nbsp;有货&nbsp;&nbsp;&nbsp;支持&nbsp;&nbsp;
+                    <a href="#">次日达&nbsp;&nbsp;</a>
+                    <!--                        <li class="spacer"></li>-->
+                    <a href="#">&nbsp;&nbsp;自提&nbsp;&nbsp;</a>
+                    <!--                        <li class="spacer"></li>-->
+                    <a href="#">&nbsp;&nbsp;99元免基础运费(10kg内)</a>
+                </div>
+                <div id="summary-supply">
+                    <div>由&nbsp;
+                        <span>京东</span>
+                        &nbsp;发货, 供应商提供售后服务. 18:00前下单，预计
+                        <b>明天(08月02日)</b>
+                        送达
+                    </div>
+                </div>
+                <div id="sum-weight">
+                    <div id="zhongliang">
+                        重&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量
+                    </div>
+                    <div id="s-w">
+                        0.23kg
+                    </div>
+                </div>
+                <div class="summary-line"></div>
+                <div id="choose-attr">
+                    <img src="images/addcart/cp.png">
+                </div>
+                <div class="summary-line"></div>
+                <div id="choose-btns">
+                    <div id="choose-amount">
+                        <div>
+                            <input value="1" type="text" v-model="productCount">
+                        </div>
+                        <a href="#none">
+                            <div id="btn-add" @click="btnAdd">+</div>
+                        </a>
+                        <a href="#none">
+                            <div id="btn-reduce" @click="btnReduce">-</div>
+                        </a>
+                    </div>
+                    <a href="#">
+                        <div id="initCart">
+                            加入购物车
+                        </div>
+                    </a>
+                </div>
+                <div id="summary-tips">
+                    <div id="tips">温馨提示</div>
+                    <div id="local-txt">·支持7天无理由退货</div>
+                </div>
+            </div>
+        </div>
+        <div id="extra">
+            <div id="track-tit">
+                <h3>看了又看</h3>
+                <div id="track-tit-span"></div>
+            </div>
+            <div id="track-con">
+                <ul id="track-con-ul">
+                    <li>
+                        <a href="#">
+                            <img src="//img10.360buyimg.com/n1/s150x150_jfs/t21004/339/2719665709/80202/b01d555c/5b6164d5N52588b17.jpg">
+                            <div class="msg">丹尼尔惠灵顿（Denil...</div>
+                            <p class="red">￥1449.00</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="//img12.360buyimg.com/n1/s150x150_jfs/t22225/330/2649289856/69870/8ac66f21/5b617ad7N27e266aa.jpg">
+                            <div class="msg">丹尼尔惠灵顿（Denil...</div>
+                            <p class="red">￥1379.00</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="//img14.360buyimg.com/n1/s150x150_jfs/t20968/73/2691165666/68990/83caf7dc/5b616e3eN485b101f.jpg">
+                            <div class="msg">丹尼尔惠灵顿（Denil...</div>
+                            <p class="red">￥1350.00</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="track-more">
+                <a class="track-more-a1" href="#">
+                    <div><</div>
+                </a>
+                <a class="track-more-a" href="#">
+                    <div>></div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

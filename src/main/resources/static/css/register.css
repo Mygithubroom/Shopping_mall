@@ -1,0 +1,69 @@
+/*统一样式*/
+div{float: left;}
+/*页面布局*/
+#header{width: 100%;height: 110px;background-color: white;box-shadow: 0 0 5px 1px #cccccc;}
+#main_body{width: 1200px;height: 600px;margin: 50px 150px;}
+/*#footer {font-size: 12px;text-align: center;border-top: solid 5px #e6e6e6;color: #999;padding-bottom: 30px;}*/
+/*HEADER*/
+#header_con{width: 1210px;height: 76px;margin:0 155px;}
+#logo{margin: 20px 0 0 }
+#logo img{width: 180px;height: 60px;}
+#hello{font-size: 24px;margin-top: 34px}
+#have_count{float:right;font-size: 16px;margin-top: 55px;color: #999999}
+#header a{color: #f10215;}
+#header a:hover{text-decoration: underline;}
+/*BODY*/
+/*body_head*/
+#main_head{margin: 10px 400px;background-color: white;width: 400px;height: 55px;}
+.head_block{text-align: center;}
+.head_line{color: #cccccc;font-size: 20px;margin-left: -15px;padding-right:-10px;}
+.head_block div{width: 24px;height: 24px;margin: 0 18px;text-align:center;border: 1px solid #cccccc;
+    border-radius: 12px;background-color:white;color: #cccccc;font-weight: 700;}
+.head_block  span{color: #999999;margin-top: 10px;}
+.head_block .num{background-color:#33bb44;color: white;border: 1px solid #33bb44}
+.head_block  .numspan{color: #3b4;margin-top: 10px;}
+
+/*FORM_1*/
+#main_form{width: 400px;height: 300px;margin-left: 400px;}
+.choose1{margin-top: 20px}
+#main_form select{width: 110px;height: 54px;border: 1px solid #cccccc;float: left; }
+#main_form #phone{width: 289px;height: 52px;border: 1px solid #cccccc;float: left;margin-left: -1px;font-size:14px;color: #cccccc}
+#main_form #phonec{color: #cccccc;margin-top: 90px;position: absolute;display: none}
+#main_form #phonec #phonec_left{border: 2px solid #cccccc;border-radius: 14px;width: 14px;height:14px;text-align: center}
+
+#main_form .button1{width: 400px;height: 54px;margin-top:40px;border: 1px solid #cccccc;background-color: white;font-size: 14px;}
+ .button2{width: 400px;height: 54px;font-size: 14px;background-color: #f10215;color: white;margin-top: 50px;border: 0px;}
+
+#main_form .button1:hover{border-color:black }
+#main_form .button2:hover{background-color: #c81623}
+#main_form .bottom{width: 400px;height: 28px;margin-top: 28px;font-size: 14px;}
+/*FORM_2*/
+#form_2{width: 400px;height: 400px;position: absolute;;display: none}
+#form_2 .choose3{width: 298px;height: 54px;border: 1px solid #cccccc;background-color: white;font-size: 14px;padding-left: 100px;}
+#form_2 .chooseText{font-size: 14px;position: absolute;margin-top:15px;font-weight: lighter}
+#agree{position: absolute;height: 20px}
+#agree input{margin-top: 340px;margin-left: 5px;}
+#agree a{color: deepskyblue}
+/*#toEnd{margin-top: 28px;}*/
+/*END*/
+#end{width: 800px;height: 400px;margin-left: 300px;position: absolute;display: none;}
+#gou{border: 3px solid #33bb44;border-radius: 50px;width: 100px;height:100px;font-size: 75px;text-align: center;margin-top: 70px;color: #33bb44;text-align: center;}
+#end #congratulation{font-size: 50px;margin: 60px 0 0 30px;width: 480px;}
+#end #finish{font-size: 20px;color: #cccccc;float: bottom;margin-left: 30px}
+#end #finish a{color: deepskyblue}
+#start{margin-left: -5px;position: relative;left: 50px}
+#start a{color: white}
+/*FOOT*/
+.footer{width:100%;height: 118px;font-size:12px;color:#999;text-align: center}
+.footer div{float: none;}
+.footer .w{height: 118px; }
+.footer .links{padding-top:30px;padding-bottom:15px;text-align: center;border-top:solid 1px #e6e6e6;}
+.footer a{color:#999;margin:0 10px;}
+.copyright{height: 21px;text-align: center;}
+
+/*ERROR*/
+.red{color: #f10215;position: absolute;margin:54px 0 0 -280px}
+
+/*TRUENAME*/
+#form_2 .sex{position: relative;right: 5px;}
+#form_2 .chooseText2{font-size: 18px;position: relative;margin-top:12px;font-weight: lighter;margin-left: 40px;padding-right: 40px}

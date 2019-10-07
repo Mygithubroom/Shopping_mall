@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link href="CSS/base.css" rel="stylesheet">
+    <link href="CSS/register.css" rel="stylesheet">
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/jquery.validate.regex.js"></script>
+    <script src="js/register.js"></script>
+</head>
+<body>
+
+    <div id="header">
+        <div id="header_con">
+            <div id="logo"><img src="images/register/logo2.jpg"></div>
+            <div id="hello">欢迎注册</div>
+            <div id="have_count">已有账号？<a href="">请登录></a></div>
+        </div>
+    </div>
+    <div id="main_body">
+        <div id="main_head">
+            <div class="head_block">
+                <div class="num">1</div><br>
+                <span class="numspan">验证手机号</span>
+            </div>
+            <div class="head_line">·&nbsp·&nbsp·&nbsp·&nbsp·&nbsp·&nbsp·&nbsp·&nbsp·&nbsp·></div>
+            <div class="head_block">
+                <div>2</div><br>
+                <span>填写账号信息</span>
+            </div>
+            <div class="head_line">·&nbsp·&nbsp·&nbsp·&nbsp·&nbsp·&nbsp·&nbsp·&nbsp·&nbsp></div>
+            <div class="head_block">
+                <div>3</div><br>
+                <span>注册成功</span>
+            </div>
+        </div>
+        <div id="main_form">
+            <form id="myForm">
+                <div id="form_1">
+                    <div class="choose1">
+                        <select>
+                            <option>China</option>
+                            <option>Eng</option>
+                        </select>
+                        <input name="phone" id="phone" value="&nbsp;&nbsp;&nbsp;建议使用常用手机号" type="text" >
+                    </div>
+                    <div id="phonec">
+                        <div id="phonec_left">!</div>
+                        &nbsp;验证完成后，你可以使用该手机登录或找回密码
+                    </div>
+                    <div class="choose2"><button class="button1" id="checkphone" value="" type="button">点击按钮进行验证</button></div>
+                    <div class="choose2"><button class="button2" id="toSecond" value="" type="button">下一步</button></div>
+
+                    <div class="bottom">
+                        <a><i class="reg-ohter-icon"></i>企业用户注册</a>
+                        <a style="float: right"><i class="reg-ohter-icon"></i>海外用户注册</a>
+                    </div>
+                </div>
+                <div id="form_2">
+                    <div><span class="chooseText">&nbsp;&nbsp;用&nbsp;&nbsp;户&nbsp;&nbsp;名</span><input class="choose3" name="username" type="text" ></div>
+                    <div><span class="chooseText">&nbsp;&nbsp;设&nbsp;置&nbsp;密&nbsp;码</span><input class="choose3" name="password" id="password" type="password"></div>
+                    <div><span class="chooseText">&nbsp;&nbsp;确&nbsp;认&nbsp;密&nbsp;码</span><input class="choose3" name="passcheck" id="passcheck" type="password"></div>
+                    <div><span class="chooseText">&nbsp;手&nbsp;机&nbsp;验&nbsp;证&nbsp;码</span><input class="choose3" name="phonecheck" type="text" value="没这功能" style="color: #cccccc"></div>
+                    <div id="agree"><input name="agree" type="checkbox" name="agree">我已阅读并同意<a>《京东注册协议》</a></div>
+                    <button class="button2" id="toEnd" value="" type="submit">确认注册</button>
+                </div>
+            </form>
+        </div>
+        <div id="end">
+            <div id="gou"><span>√</span></div>
+            <div id="congratulation"></div>
+            <div id="finish">完善账号安全，<a>开启实名认证></a></div>
+            <button class="button2" id="start" value=""><a href="test.html">去首页</a></button>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="w">
+            <div class="links">
+                <a rel="nofollow" target="_blank" href="//www.jd.com/intro/about.aspx"> 关于我们</a>|
+                <a rel="nofollow" target="_blank" href="//www.jd.com/contact/">联系我们</a>|
+                <a rel="nofollow" target="_blank" href="//zhaopin.jd.com/">人才招聘</a>|
+                <a rel="nofollow" target="_blank" href="//www.jd.com/contact/joinin.aspx">商家入驻</a>|
+                <a rel="no  follow" target="_blank" href="//www.jd.com/intro/service.aspx">广告服务</a>|
+                <a rel="nofollow" target="_blank" href="//app.jd.com/">手机京东</a>|
+                <a target="_blank" href="//club.jd.com/links.aspx">友情链接</a>|
+                <a target="_blank" href="//media.jd.com">销售联盟</a>|
+                <a href="//club.jd.com/" target="_blank">京东社区</a>|
+                <a href="//gongyi.jd.com" target="_blank">京东公益</a>|
+                <a target="_blank" href="//en.jd.com/" clstag="pageclick|keycount|20150112ABD|9">English Site</a>
+            </div>
+            <div class="copyright">
+                Copyright©2004-2019&nbsp;&nbsp;京东JD.com&nbsp;版权所有
+            </div>
+        </div>
+    </div>
+</body>
+</html>

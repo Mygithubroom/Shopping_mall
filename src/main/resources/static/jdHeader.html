@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>京东(JD.COM)-正品低价</title>
+    <link href="css/jdHeader.css" rel="stylesheet">
+    <link href="css/jdBase.css" rel="stylesheet">
+    <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
+<!--    图片轮询-->
+    <script>
+
+        var i = 0;
+        var a = 0;
+        var fsMainImgs = new Array(
+            "//img13.360buyimg.com/pop/s590x470_jfs/t1/57623/33/3098/67877/5d0ec60aEb426b06c/2f8bd2f6d846de9f.jpg.webp",
+            "//img11.360buyimg.com/pop/s590x470_jfs/t1/46384/24/2430/109547/5d02e28cE1d2c9083/49d43918ccf2aae4.jpg.webp",
+            "//img11.360buyimg.com/babel/s590x470_jfs/t1/52734/14/6134/97935/5d3e66b3E506b5b46/e95eab2cf9a33cd3.jpg.webp",
+            "//imgcps.jd.com/ling/27975001562/5a6J5YWo55So55S16IqC/MuS7tjjmipggM-S7tjfmipg/p-5bd8253082acdd181d02fa68/c0c09a9d.jpg",
+            "//img12.360buyimg.com/pop/s590x470_jfs/t1/64886/6/5281/68671/5d38f128E68c7f662/e5ccc1ffe60b75ae.jpg.webp"
+        );
+        var secKillBrandImgs = new Array(
+            "images/brand.png",
+            "images/brand2.png"
+        );
+        $(function () {
+            setTimeout("changeMainImg()", 3000);
+            setTimeout("changeBrandImg()", 3000);
+        });
+
+        function changeMainImg(){
+            i++;
+            if(i == fsMainImgs.length){
+                i = 0;
+            }
+            $(".focus_main img").attr("src", fsMainImgs[i]);
+            setTimeout("changeMainImg()", 3000);
+        };
+        function changeBrandImg(){
+            a++;
+            if(a == secKillBrandImgs.length){
+                a = 0;
+            }
+            $(".secKill_brand img").attr("src", secKillBrandImgs[i]);
+            setTimeout("changeBrandImg()", 1500);
+        };
+    </script>
+<!--    搜索栏-->
+    <script>
+        $(function () {
+            $(document).scroll(function () {
+                // alert(11);
+                var scrollTo = $(document).scrollTop();
+                if(scrollTo >= 400) {
+                    $(".line_form").fadeIn(500);
+                }else {
+                    $(".line_form").fadeOut(500);
+                }
+            })
+        })
+    </script>
+    <script>
+        $(function () {
+            $(document).scroll(function () {
+                var scrollTo = $(document).scrollTop();
+                    if(scrollTo >= 400) {
+                        $(".elevator").fadeIn(500);
+                        // $(".elevator li").css("background-color","#e1251b");
+                      //  $(".elevator a").css("color", "#FFFFFF")
+                    }else {
+                        $(".elevator").fadeOut(500);
+                    //    $(".elevator li").css("background-color","#FFFFFF");
+                    //    $(".elevator a").css("color", "#black")
+                    }
+            })
+        })
+    </script>
+<!--    图片虚化-->
+    <script>
+        $(function () {
+            $(".lazy_img").hover(function () {
+                $(this).animate({opacity :"0.7"}, 300);
+            },function () {
+                $(this).animate({opacity :"1"}, 300);
+            })
+        })
+    </script>
+
+    <script src="js/jquery.validate.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script>
+        $(function () {
+            var form = new Vue({
+                el:".form",
+                data:{
+                    search_text:"衣服"
+                }
+            });
+            $(".form_button input").click(function (){
+                sessionStorage.setItem("searchText", form.search_text);
+                window.open("http://localhost:8080/search.html");
+            })
+
+        })
+    </script>
+
+
+</head>
+
+<body>
+    <div id="shortcut">
+        <div class="w">
+            <ul id="myCity">
+                <li>
+                    <a>
+                        <i class="iconfont iconfont-location red"></i>
+                        <span href="#">福建</span>
+                    </a>
+                </li>
+            </ul>
+            <ul id="menu">
+                <li class="dt">
+                    <a href="#">你好，请登录</a>
+                    <a href="#" class="red">免...</a>
+                </li>
+                <li class="spacer"></li>
+                <li class="dt"><a href="#">我的订单</a></li>
+                <li class="spacer"></li>
+                <li class="dt"><a href="#">我的京东</a><i class="iconfont"></i></li>
+                <li class="spacer"></li>
+                <li class="dt"><a href="#">京东会员</a></li>
+                <li class="spacer"></li>
+                <li class="dt"><a href="#" class="red">企业采购</a> <i class="iconfont"></i></li>
+                <li class="spacer"></li>
+                <li class="dt"><a href="#">客户服务</a> <i class="iconfont"></i></li>
+                <li class="spacer"></li>
+                <li class="dt"><a href="#">网站导航</a> <i class="iconfont"></i></li>
+                <li class="spacer"></li>
+                <li class="dt"><a href="#">手机京东</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="header">
+        <div class="header_cont">
+            <div id="logo"></div>
+            <div id="search">
+<!--                <div id="search_form" class="red">-->
+<!--                    <div id="search_text">-->
+<!--                        <input type="text" v-model="search_text">-->
+<!--                    </div>-->
+<!--                    <div id="search_file">-->
+<!--                    </div>-->
+<!--                    <div id="search_button">-->
+<!--                        <input  type="submit" src="images.searchImages/sear.png">-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="form" style="margin: 10px 10px 3px 60px">
+                    <input name="search_text" class="form_input" style="border: none" type="text" v-model="search_text">
+                    <div  class="form_camera">
+                        <img src="images/searchImages/camera.png">
+                        <input class="form_file" type="file" >
+                    </div>
+                    <div class="form_button"><i>搜索</i><input type="submit"></div>
+                </div>
+                <div class="shop_car" class="cw-icon">
+                    <a  style="color: red; font-size: 13px;margin-top: 8px" href="cart.html" style="font-size: 14px">我的购物车</a>
+                    <i class="iconfont car_title" style="color: red"></i>
+                    <i class="ci-count" class="shop-amount">0</i>
+                </div>
+<!--                <div id="shopping_car" class="cw-icon">-->
+<!--                    <a  style="color: red; font-size: 13px;margin-top: 8px" href="#" style="font-size: 14px">我的购物车</a>-->
+<!--                    <i class="iconfont car_title" style="color: red"></i>-->
+<!--                    <i class="ci-count" id="shopping-amount">0</i>-->
+<!--                </div>-->
+            </div>
+            <div id="ma"></div>
+            <div id="hostWord">
+                <ul>
+                    <li class="word1"><a href="#" class="red">抢大额神券</a></li>
+                    <li class="word"><a href="#">正品好药</a></li>
+                    <li class="word"><a href="#">空调锯惠</a></li>
+                    <li class="word"><a href="#">开关5折</a></li>
+                    <li class="word"><a href="#">美妆新品</a></li>
+                    <li class="word"><a href="#">鞋靴清仓</a></li>
+                    <li class="word"><a href="#">每100-5</a></li>
+                    <li class="word"><a href="#">纸品生活</a></li>
+                    <li class="word"><a href="#">养殖消毒</a></li>
+                </ul>
+            </div>
+            <div id="navItems">
+                <ul>
+                    <li class="fore1"><a class="red myBold" href="#">秒杀</a></li>
+                    <li class="fore2"><a class="red myBold" href="#">优惠券</a></li>
+                    <li class="fore3"><a href="#">PLUS会员</a></li>
+                    <li class="fore4"><a href="#">品牌闪购</a></li>
+                    <li class="fore5"><a href="#">拍卖</a></li>
+                    <li class="fore6"><a href="#">京东时尚</a></li>
+                    <li class="fore7"><a href="#">京东超市</a></li>
+                    <li class="fore8"><a href="#">京东生鲜</a></li>
+                    <li class="fore9"><a href="#" href="#">海囤全球</a></li>
+                    <li class="fore10"><a href="#">京东金融</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="con">
+        <div class="fs">
+            <div class="fs_col1">
+                <div id="J_cate">
+                    <ul>
+                        <li class="cate_menu_item top10">
+                            <a href="#" class="cate_menu_li">家用电器</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a href="#" class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a href="#" class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a href="#" class="cate_menu_li">数码</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">数码</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">数码</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">数码</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">数码</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">数码</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">数码</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">数码</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">数码</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">数码</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">数码</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">数码</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">数码</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">数码</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">数码</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">数码</a>
+                        </li>
+                        <li class="cate_menu_item">
+                            <a class="cate_menu_li">手机</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">运营商</a>
+                            <span class="cate_menu_line">/</span>
+                            <a class="cate_menu_li">数码</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fs_col2">
+                <div class="focus_main">
+                    <img src="//img11.360buyimg.com/babel/s590x470_jfs/t1/52734/14/6134/97935/5d3e66b3E506b5b46/e95eab2cf9a33cd3.jpg.webp">
+                </div>
+                <div class="focus_slider">
+                    <div class="focus_slider1"> </div>
+                    <div class="focus_slider2"> </div>
+                    <div class="focus_slider3"> </div>
+                </div>
+            </div>
+            <div class="fs_col3">
+                <div class="user_inner">
+                    <div class="user_avatar">
+                        <a href="#">
+                            <img src="images/searchImages/avter.png" alt="登陆图标">
+                        </a>
+                    </div>
+                    <div class="user_show">
+                        <a href="#">Hi~欢迎逛京东</a>
+                        <p>
+                            <a href="#">登录</a>
+                            |
+                            <a href="#">注册</a>
+                        </p>
+                    </div>
+                    <div class="user_profit_li">
+                        <a href="#" class="e5d790">PLUS会员</a>
+                    </div>
+                    <div class="user_profit_li user_profit_plus">
+                        <a href="#" class="white">新人福利</a>
+                    </div>
+                </div>
+                <div class="news2">
+                    <div class="news_hd">
+                        <h5>京东快报</h5>
+                        <i class="iconfont"></i>
+                        <a href="#">更多</a>
+                    </div>
+                    <div class="news_list">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <span class="news_tag">推荐</span>华为麒麟990新突破...
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="news_tag">最新</span>小米10：骁龙865+...
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="news_tag">热门</span>iPhone 11国行售价...
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="news_tag">热评</span>首批鸿蒙系统测试用...
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="service">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <div class="ico_img">
+                                    <img class="ico_img1" src="//m.360buyimg.com/babel/jfs/t1/30057/19/14881/720/5cbf064aE187b8361/eed6f6cbf1de3aaa.png">
+                                    <img class="ico_img_hover" src="http://m.360buyimg.com/babel/jfs/t1/45423/33/385/778/5cd4f265E442a9342/0aff0a42cece09ee.png">
+                                </div>
+                                <div class="ico_txt"><span>话费</span></div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ico_img">
+                                    <img class="ico_img1" src="//m.360buyimg.com/babel/jfs/t1/36478/38/5384/2901/5cbf065aEb0c60a12/afb4399323fe3b76.png">
+                                    <img class="ico_img_hover" src="//m.360buyimg.com/babel/jfs/t1/34261/15/10242/3120/5cd4f256E10257aba/8f3f63ae04ff19af.png">
+                                </div>
+                                <div class="ico_txt"><span>机票</span></div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ico_img">
+                                    <img class="ico_img1" src="//m.360buyimg.com/babel/jfs/t1/31069/34/14642/979/5cbf0665Ec7dc8223/5fee386254dd2ebc.png">
+                                    <img class="ico_img_hover" src="//m.360buyimg.com/babel/jfs/t1/44601/19/915/1039/5cd4f1cfE2e46473c/b61f083872a7a1de.png">
+                                </div>
+                                <div class="ico_txt"><span>酒店</span></div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ico_img">
+                                    <img class="ico_img1" src="//m.360buyimg.com/babel/jfs/t1/32403/22/14829/3699/5cbf0674E04723693/caa83ce9b881cd24.png">
+                                    <img class="ico_img_hover" src="//m.360buyimg.com/babel/jfs/t1/57520/8/375/4092/5cd4f1d8Ea1266047/1c590322ece537ba.png">
+                                </div>
+                                <div class="ico_txt"><span>游戏</span></div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ico_img">
+                                    <img class="ico_img1" src="http://m.360buyimg.com/babel/jfs/t1/35852/40/5378/815/5cbf09f9E660e7e71/18b5679ed16e6a91.png">
+                                    <img class="ico_img_hover" src="http://m.360buyimg.com/babel/jfs/t1/55911/31/402/858/5cd4f23eE6f536460/5da079255c6dfabe.png">
+                                </div>
+                                <div class="ico_txt"><span>礼品卡</span></div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ico_img">
+                                    <img class="ico_img1" src="http://m.360buyimg.com/babel/jfs/t1/39418/35/2029/3048/5cbf06bbE9a6e2beb/6a9b204b0a4cc3d0.png">
+                                    <img class="ico_img_hover" src="http://m.360buyimg.com/babel/jfs/t1/36002/35/9106/3311/5cd4f1bdE06ff07ed/9570fdd46ecd3a76.png">
+                                </div>
+                                <div class="ico_txt"><span>加油卡</span></div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ico_img">
+                                    <img class="ico_img1" src="http://m.360buyimg.com/babel/jfs/t1/31847/11/14820/1581/5cbf09bdE07a1e79c/1281c9340ef15c3e.png">
+                                    <img class="ico_img_hover" src="http://m.360buyimg.com/babel/jfs/t1/58891/36/278/1745/5cd4f1e0Ef4cc50a7/f12276b17e5dcf3b.png">
+                                </div>
+                                <div class="ico_txt"><span>火车票</span></div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ico_img">
+                                    <img class="ico_img1" src="//m.360buyimg.com/babel/jfs/t1/30057/19/14881/720/5cbf064aE187b8361/eed6f6cbf1de3aaa.png">
+                                    <img class="ico_img_hover" src="http://m.360buyimg.com/babel/jfs/t1/45423/33/385/778/5cd4f265E442a9342/0aff0a42cece09ee.png">
+                                </div>
+                                <div class="ico_txt"><span>众筹</span></div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ico_img">
+                                    <img class="ico_img1" src="//m.360buyimg.com/babel/jfs/t1/30057/19/14881/720/5cbf064aE187b8361/eed6f6cbf1de3aaa.png">
+                                    <img class="ico_img_hover" src="http://m.360buyimg.com/babel/jfs/t1/45423/33/385/778/5cd4f265E442a9342/0aff0a42cece09ee.png">
+                                </div>
+                                <div class="ico_txt"><span>理财</span></div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ico_img">
+                                    <img class="ico_img1" src="//m.360buyimg.com/babel/jfs/t1/30057/19/14881/720/5cbf064aE187b8361/eed6f6cbf1de3aaa.png">
+                                    <img class="ico_img_hover" src="http://m.360buyimg.com/babel/jfs/t1/45423/33/385/778/5cd4f265E442a9342/0aff0a42cece09ee.png">
+                                </div>
+                                <div class="ico_txt"><span>白条</span></div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ico_img">
+                                    <img class="ico_img1" src="//m.360buyimg.com/babel/jfs/t1/30057/19/14881/720/5cbf064aE187b8361/eed6f6cbf1de3aaa.png">
+                                    <img class="ico_img_hover" src="http://m.360buyimg.com/babel/jfs/t1/45423/33/385/778/5cd4f265E442a9342/0aff0a42cece09ee.png">
+                                </div>
+                                <div class="ico_txt"><span>电影票</span></div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="ico_img">
+                                    <img class="ico_img1" src="//m.360buyimg.com/babel/jfs/t1/30057/19/14881/720/5cbf064aE187b8361/eed6f6cbf1de3aaa.png">
+                                    <img class="ico_img_hover" src="http://m.360buyimg.com/babel/jfs/t1/45423/33/385/778/5cd4f265E442a9342/0aff0a42cece09ee.png">
+                                </div>
+                                <div class="ico_txt"><span>企业购</span></div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="secKill">
+            <a href="#">
+                <div class="secKill_countdown">
+                    <div class="secKill_countdown_title white myBold">
+                        京东秒杀
+                    </div>
+                    <div class="secKill_countdown_desc white">
+                        <span>10:00</span>
+                        点场倒计时
+                    </div>
+                    <div class="secKill_countdown_main">
+                        <span class="timer left30 white myBold">
+                            00
+                        </span>
+                        <i class="maoHao white myBold">:</i>
+                        <span class="timer  white myBold">
+                            00
+                        </span>
+                        <i class="maoHao white myBold">:</i>
+                        <span class="timer  white myBold">
+                            00
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="secKill_item">
+                    <div class="lazy_img">
+                        <img src="//img11.360buyimg.com/mobilecms/s140x140_jfs/t1/34486/20/5099/77234/5cc5217cE52882692/e011d04795b8670b.jpg.webp">
+                    </div>
+                    <div class="secKill_item_name line_limit_len">乐灵珠宝黄金貔貅手链女3D硬金足金999本命年转运珠手镯石榴石皮丘手串XYGF054-1</div>
+                    <div class="secKill_item_price red">
+                    <span class="price_secKill white myBold">
+                        <i>¥</i>
+                        <span>899.00</span>
+                    </span>
+                        <span class="price_origin">
+                            <i>¥</i>
+                            <s>1899.00</s>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="secKill_item">
+                    <div class="lazy_img">
+                        <img src="//img12.360buyimg.com/mobilecms/s140x140_jfs/t1/53944/31/1343/48562/5cf0e8f5Eb21adc98/35043157c59501de.jpg.webp">
+                    </div>
+                    <div class="secKill_item_name line_limit_len">喜德盛（xds)新国标电动车48V8AH锂电池电动自行车16吋男女通用代步超轻锂电车豹子2C精英版 黑色</div>
+                    <div class="secKill_item_price red">
+                    <span class="price_secKill white myBold">
+                        <i>¥</i>
+                        <span>899.00</span>
+                    </span>
+                        <span class="price_origin">
+                            <i>¥</i>
+                            <s>1899.00</s>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="secKill_item">
+                    <div class="lazy_img">
+                        <img src="//img10.360buyimg.com/mobilecms/s140x140_jfs/t1/57965/12/1676/170516/5cf76d19E0792569d/9d07617f76aadf72.jpg.webp">
+                    </div>
+                    <div class="secKill_item_name line_limit_len">迪士尼(Disney）儿童袜子【五双装】春夏季薄款婴儿袜男女童小学生棉袜小孩宝宝袜子3-12岁棉袜 春夏B款-6女童5双装（SM3422） 16-18cm适合4-6岁</div>
+                    <div class="secKill_item_price red">
+                    <span class="price_secKill white myBold">
+                        <i>¥</i>
+                        <span>899.00</span>
+                    </span>
+                        <span class="price_origin">
+                            <i>¥</i>
+                            <s>1899.00</s>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="secKill_item">
+                    <div class="lazy_img">
+                        <img src="//img20.360buyimg.com/mobilecms/s140x140_jfs/t22624/272/542344062/146577/328ea730/5b34af56Nf79494c2.jpg.webp">
+                    </div>
+                    <div class="secKill_item_name line_limit_len">大水牛（BUBALUS）1008升级版机箱+宽V400台式电脑主机电源套装 （支持ATX/MATX主板/凸包宽背线空间）</div>
+                    <div class="secKill_item_price red">
+                    <span class="price_secKill white myBold">
+                        <i>¥</i>
+                        <span>899.00</span>
+                    </span>
+                        <span class="price_origin">
+                            <i>¥</i>
+                            <s>1899.00</s>
+                        </span>
+                    </div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="secKill_brand">
+                    <img src="images/searchImages/brand.png">
+                </div>
+            </a>
+
+        </div>
+        <div class="elevator">
+            <ul>
+                <li>
+                    <a HREF="#">
+                        <span class="elevator_txt">京东秒杀</span>
+                    </a>
+                </li>
+                <li>
+                    <a HREF="#">
+                        <span class="elevator_txt">特色优选</span>
+
+                    </a>
+                </li>
+                <li>
+                    <a HREF="#">
+                        <span class="elevator_txt">频道广场</span>
+                    </a>
+                </li>
+                <li>
+                    <a HREF="#">
+                        <span class="elevator_txt">为你推荐</span>
+                    </a>
+                </li>
+                <li>
+                    <a HREF="#">
+                        <img src="images.searchImages/kefu.png">
+                        <span class="elevator_txt1">客服</span>
+                    </a>
+                </li>
+                <li>
+                    <a HREF="#">
+                        <img src="images.searchImages/fangkui.png">
+                        <span class="elevator_txt1">反馈</span>
+                    </a>
+                </li>
+                <li>
+                    <a HREF="#">
+                        <span class="elevator_logo myBold">^</span>
+                        <span class="elevator_txt1">顶部</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="line_form">
+        <div class="wc">
+            <div class="logo2"></div>
+            <div class="form">
+                <input  class="form_input" style="border: none" type="text">
+                <div  class="form_camera">
+                    <img src="images.searchImages/camera.png">
+                    <input class="form_file" type="file" >
+                </div>
+                <div class="form_button"><i>搜索</i><button></button></div>
+            </div>
+            <div class="shop_car" class="cw-icon">
+                <a  style="color: red; font-size: 13px;margin-top: 8px" href="#" style="font-size: 14px">我的购物车</a>
+                <i class="iconfont car_title" style="color: red"></i>
+                <i class="ci-count" class="shop-amount">0</i>
+            </div>
+
+        </div>
+        <div class="red_line"></div>
+    </div>
+    <div id="footer">
+        <iframe id="footerFrame" name="footerFrame" src="footer.html" width="990" height="400" frameborder="0" scrolling="no"></iframe>
+    </div>
+</body>
+
+
+
+
+</html>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lanqiao.jingdong.mapper.ProductInfoMapper" >
+  <resultMap id="ProductInfoResultMap" type="org.lanqiao.jingdong.entity.ProductInfo" >
+    <id column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="brand_id" property="brandId" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="publish_status" property="publishStatus" jdbcType="TINYINT" />
+    <association property="brandInfo" resultMap="BrandInfoResultMap"></association>
+    <association property="productPic" resultMap="ProductPicResultMap"></association>
+    <collection property="categoryInfoSet" resultMap="CategoryInfoResultMap"></collection>
+  </resultMap>
+  <resultMap id="BrandInfoResultMap" type="org.lanqiao.jingdong.entity.BrandInfo" >
+    <id column="brand_id" property="brandId" jdbcType="INTEGER" />
+    <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+    <result column="brand_logo_url" property="brandLogoUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ProductPicResultMap" type="org.lanqiao.jingdong.entity.ProductPic" >
+    <id column="product_pic_id" property="productPicId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="search_pic_url" property="searchPicUrl" jdbcType="VARCHAR" />
+    <result column="search_little_pic_url" property="searchLittlePicUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="CategoryInfoResultMap" type="org.lanqiao.jingdong.entity.CategoryInfo" >
+    <id column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="category_level" property="categoryLevel" jdbcType="INTEGER" />
+  </resultMap>
+
+<!--  <resultMap id="ResultMapWithBLOBs" type="org.lanqiao.jingdong.entity.ProductInfo" extends="ProductInfoResultMap" >-->
+<!--    <result column="descript" property="descript" jdbcType="LONGVARCHAR" />-->
+<!--  </resultMap>-->
+
+  <sql id="Base_Column_List" >
+    product_id, product_name, brand_id, price, one_category_id, two_category_id, three_category_id,
+    publish_status, weight, length, width, height, color
+  </sql>
+  <sql id="Blob_Column_List" >
+    descript
+  </sql>
+
+  <select id="selectByNameForTotalCount" resultType="java.lang.Integer">
+    select count(*) from product_info pi
+        <if test="categoryId != 0"> , product_category pc</if>
+    <where>
+        <if test="productName != null">instr(pi.product_name, #{productName})</if>
+        <if test="brandId != 0">and pi.brand_id = #{brandId} </if>
+        <if test="categoryId != 0">and pc.product_id = pi.product_id and pc.category_id = #{categoryId}</if>
+    </where>
+  </select>
+
+  <select id="selectByNameForProduct" resultMap="ProductInfoResultMap">
+        select pi.product_id, pi.product_name, pi.price,pi.brand_id, pp.search_pic_url, pp.search_little_pic_url
+    from product_info pi, product_pic pp
+    <if test="categoryId != 0">, product_category pc</if>
+    <where>
+        <if test="productName != null">instr(pi.product_name,#{productName}) </if>
+        <if test="productName != null">and  pi.product_id = pp.product_id</if>
+        <if test="brandId != 0"> and pi.brand_id = #{brandId}</if>
+        <if test="categoryId != 0">and pc.product_id = pi.product_id and pc.category_id = #{categoryId}</if>
+    </where>
+    group by pi.product_id limit #{pageBegin},#{pageSize}
+  </select>
+
+  <select id="selectByNameForBrand" resultMap="BrandInfoResultMap">
+    select bi.brand_id, bi.brand_logo_url, bi.brand_name
+    from product_info pi, brand_info bi
+    where instr(pi.product_name,#{productName}) and  pi.brand_id = bi.brand_id GROUP BY bi.brand_id
+  </select>
+
+  <select id="selectByNameForCateTwo" resultMap="CategoryInfoResultMap">
+    select ci.category_name, ci.category_id
+    from product_info pi, category_info ci, product_category pc
+    where instr(pi.product_name,#{productName}) and ci.category_level = 2
+		and pi.product_id = pc.product_id and pc.category_id = ci.category_id
+		group by ci.category_id
+  </select>
+
+  <select id="selectByCateTwoForCateThree" resultMap="CategoryInfoResultMap">
+        select ci.category_name, ci.category_id
+    from category_info ci, product_info pi, product_category pc
+    where ci.parent_id = #{cateTwo} and instr(pi.product_name,#{productName}) and pi.product_id = pc.product_id and pc.category_id = ci.category_id
+		GROUP BY ci.category_id
+  </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select *
+    from product_info
+    where product_id = #{productId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product_info
+    where product_id = #{productId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lanqiao.jingdong.entity.ProductInfo" >
+    insert into product_info (product_id, product_name, brand_id, 
+      price, one_category_id, two_category_id, 
+      three_category_id, publish_status, weight, 
+      length, width, height, 
+      color, descript)
+    values (#{productId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{brandId,jdbcType=INTEGER}, 
+      #{price,jdbcType=DECIMAL}, #{oneCategoryId,jdbcType=INTEGER}, #{twoCategoryId,jdbcType=INTEGER}, 
+      #{threeCategoryId,jdbcType=INTEGER}, #{publishStatus,jdbcType=TINYINT}, #{weight,jdbcType=DOUBLE}, 
+      #{length,jdbcType=DOUBLE}, #{width,jdbcType=DOUBLE}, #{height,jdbcType=DOUBLE}, 
+      #{color,jdbcType=CHAR}, #{descript,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lanqiao.jingdong.entity.ProductInfo" >
+    insert into product_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="brandId != null" >
+        brand_id,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="oneCategoryId != null" >
+        one_category_id,
+      </if>
+      <if test="twoCategoryId != null" >
+        two_category_id,
+      </if>
+      <if test="threeCategoryId != null" >
+        three_category_id,
+      </if>
+      <if test="publishStatus != null" >
+        publish_status,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="length != null" >
+        length,
+      </if>
+      <if test="width != null" >
+        width,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="color != null" >
+        color,
+      </if>
+      <if test="descript != null" >
+        descript,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null" >
+        #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="oneCategoryId != null" >
+        #{oneCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="twoCategoryId != null" >
+        #{twoCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="threeCategoryId != null" >
+        #{threeCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="publishStatus != null" >
+        #{publishStatus,jdbcType=TINYINT},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="length != null" >
+        #{length,jdbcType=DOUBLE},
+      </if>
+      <if test="width != null" >
+        #{width,jdbcType=DOUBLE},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="color != null" >
+        #{color,jdbcType=CHAR},
+      </if>
+      <if test="descript != null" >
+        #{descript,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lanqiao.jingdong.entity.ProductInfo" >
+    update product_info
+    <set >
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null" >
+        brand_id = #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="oneCategoryId != null" >
+        one_category_id = #{oneCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="twoCategoryId != null" >
+        two_category_id = #{twoCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="threeCategoryId != null" >
+        three_category_id = #{threeCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="publishStatus != null" >
+        publish_status = #{publishStatus,jdbcType=TINYINT},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="length != null" >
+        length = #{length,jdbcType=DOUBLE},
+      </if>
+      <if test="width != null" >
+        width = #{width,jdbcType=DOUBLE},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="color != null" >
+        color = #{color,jdbcType=CHAR},
+      </if>
+      <if test="descript != null" >
+        descript = #{descript,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.lanqiao.jingdong.entity.ProductInfo" >
+    update product_info
+    set product_name = #{productName,jdbcType=VARCHAR},
+      brand_id = #{brandId,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      one_category_id = #{oneCategoryId,jdbcType=INTEGER},
+      two_category_id = #{twoCategoryId,jdbcType=INTEGER},
+      three_category_id = #{threeCategoryId,jdbcType=INTEGER},
+      publish_status = #{publishStatus,jdbcType=TINYINT},
+      weight = #{weight,jdbcType=DOUBLE},
+      length = #{length,jdbcType=DOUBLE},
+      width = #{width,jdbcType=DOUBLE},
+      height = #{height,jdbcType=DOUBLE},
+      color = #{color,jdbcType=CHAR},
+      descript = #{descript,jdbcType=LONGVARCHAR}
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lanqiao.jingdong.entity.ProductInfo" >
+    update product_info
+    set product_name = #{productName,jdbcType=VARCHAR},
+      brand_id = #{brandId,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      one_category_id = #{oneCategoryId,jdbcType=INTEGER},
+      two_category_id = #{twoCategoryId,jdbcType=INTEGER},
+      three_category_id = #{threeCategoryId,jdbcType=INTEGER},
+      publish_status = #{publishStatus,jdbcType=TINYINT},
+      weight = #{weight,jdbcType=DOUBLE},
+      length = #{length,jdbcType=DOUBLE},
+      width = #{width,jdbcType=DOUBLE},
+      height = #{height,jdbcType=DOUBLE},
+      color = #{color,jdbcType=CHAR}
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+</mapper>

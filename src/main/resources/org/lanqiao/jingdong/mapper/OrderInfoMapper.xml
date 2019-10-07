@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lanqiao.jingdong.mapper.OrderInfoMapper" >
+  <resultMap id="BaseResultMap" type="org.lanqiao.jingdong.entity.OrderInfo" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_date" property="orderDate" jdbcType="TIMESTAMP" />
+    <result column="login_id" property="loginId" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap type="org.lanqiao.jingdong.entity.OrderInfo" id="OrderInfoResultMap">
+
+  <id jdbcType="INTEGER" property="orderId" column="order_id"/>
+
+  <result jdbcType="TIMESTAMP" property="orderDate" column="order_date"/>
+
+  <result jdbcType="INTEGER" property="loginId" column="login_id"/>
+
+  <collection property="productOrders" resultMap="ProductOrderResultMap"/>
+
+</resultMap>
+
+  <!--ProductOrder-->
+
+
+
+  <resultMap type="org.lanqiao.jingdong.entity.ProductOrder" id="ProductOrderResultMap">
+
+  <result jdbcType="INTEGER" property="orderId" column="order_id"/>
+
+  <result jdbcType="INTEGER" property="productId" column="product_id"/>
+
+  <result jdbcType="INTEGER" property="itemNum" column="item_num"/>
+
+  <collection property="productInfo" resultMap="ProductInfoResultMap"/>
+
+</resultMap>
+
+  <!-- ProductInfo-->
+
+
+
+  <resultMap type="org.lanqiao.jingdong.entity.ProductInfo" id="ProductInfoResultMap">
+
+  <id jdbcType="INTEGER" property="productId" column="product_id"/>
+
+  <result jdbcType="VARCHAR" property="productName" column="product_name"/>
+
+  <result jdbcType="INTEGER" property="brandId" column="brand_id"/>
+
+  <result jdbcType="DECIMAL" property="price" column="price"/>
+
+  <result jdbcType="TINYINT" property="publishStatus" column="publish_status"/>
+
+  <association property="productPic" resultMap="ProductPicResultMap"/>
+
+</resultMap>
+
+
+  <resultMap type="org.lanqiao.jingdong.entity.ProductInfo" id="ResultMapWithBLOBs" extends="ProductInfoResultMap">
+
+  <result jdbcType="LONGVARCHAR" property="descript" column="descript"/>
+
+</resultMap>
+
+  <!-- ProductPic-->
+
+
+
+  <resultMap type="org.lanqiao.jingdong.entity.ProductPic" id="ProductPicResultMap">
+
+  <id jdbcType="INTEGER" property="productPicId" column="product_pic_id"/>
+
+  <result jdbcType="INTEGER" property="productId" column="product_id"/>
+
+  <result jdbcType="VARCHAR" property="mainPicDesc" column="main_pic_desc"/>
+
+  <result jdbcType="VARCHAR" property="mainPicUrl" column="main_pic_url"/>
+
+  <result jdbcType="VARCHAR" property="littlePicUrl" column="little_pic_url"/>
+
+  <result jdbcType="VARCHAR" property="searchPicUrl" column="search_pic_url"/>
+
+  <result jdbcType="VARCHAR" property="searchLittlePicUrl" column="search_little_pic_url"/>
+
+  <result jdbcType="VARCHAR" property="cartPicUrl" column="cart_pic_url"/>
+
+  <result jdbcType="VARCHAR" property="cartPicDesc" column="cart_pic_desc"/>
+
+</resultMap>
+
+  <!--订单页获取信息-->
+
+
+  <select id="getOrderInfo" resultMap="OrderInfoResultMap" parameterType="java.lang.Integer">
+select oi.*,po.*,pi.*,pp.*from order_info oi, product_order po, product_info pi ,product_pic ppwhere oi.order_id = po.order_id
+and po.product_id = pi.product_id and pi.product_id = pp.product_id and oi.order_id = #{orderId,jdbcType=INTEGER}
+</select>
+  <insert id="insertLoginId" parameterType="java.lang.Integer" keyProperty="orderId" useGeneratedKeys="true">
+    INSERT into order_info(login_id) VALUE (#{loginId,jdbcType=INTEGER})
+  </insert>
+  <sql id="Base_Column_List" >
+    order_id, order_date, login_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_info
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from order_info
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lanqiao.jingdong.entity.OrderInfo" >
+    insert into order_info (order_id, order_date, login_id
+      )
+    values (#{orderId,jdbcType=INTEGER}, #{orderDate,jdbcType=TIMESTAMP}, #{loginId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.lanqiao.jingdong.entity.OrderInfo" >
+    insert into order_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderDate != null" >
+        order_date,
+      </if>
+      <if test="loginId != null" >
+        login_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderDate != null" >
+        #{orderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginId != null" >
+        #{loginId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lanqiao.jingdong.entity.OrderInfo" >
+    update order_info
+    <set >
+      <if test="orderDate != null" >
+        order_date = #{orderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginId != null" >
+        login_id = #{loginId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lanqiao.jingdong.entity.OrderInfo" >
+    update order_info
+    set order_date = #{orderDate,jdbcType=TIMESTAMP},
+      login_id = #{loginId,jdbcType=INTEGER}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>

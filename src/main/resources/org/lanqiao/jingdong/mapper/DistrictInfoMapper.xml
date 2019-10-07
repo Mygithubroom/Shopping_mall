@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lanqiao.jingdong.mapper.DistrictInfoMapper" >
+  <resultMap id="BaseResultMap" type="org.lanqiao.jingdong.entity.DistrictInfo" >
+    <id column="district" property="district" jdbcType="INTEGER" />
+    <result column="district_name" property="districtName" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    district, district_name, city
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from district_info
+    where district = #{district,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from district_info
+    where district = #{district,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lanqiao.jingdong.entity.DistrictInfo" >
+    insert into district_info (district, district_name, city
+      )
+    values (#{district,jdbcType=INTEGER}, #{districtName,jdbcType=VARCHAR}, #{city,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.lanqiao.jingdong.entity.DistrictInfo" >
+    insert into district_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="district != null" >
+        district,
+      </if>
+      <if test="districtName != null" >
+        district_name,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="district != null" >
+        #{district,jdbcType=INTEGER},
+      </if>
+      <if test="districtName != null" >
+        #{districtName,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lanqiao.jingdong.entity.DistrictInfo" >
+    update district_info
+    <set >
+      <if test="districtName != null" >
+        district_name = #{districtName,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=INTEGER},
+      </if>
+    </set>
+    where district = #{district,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lanqiao.jingdong.entity.DistrictInfo" >
+    update district_info
+    set district_name = #{districtName,jdbcType=VARCHAR},
+      city = #{city,jdbcType=INTEGER}
+    where district = #{district,jdbcType=INTEGER}
+  </update>
+</mapper>

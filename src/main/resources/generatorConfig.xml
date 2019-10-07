@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<!-- 配置文件路径 -->
+	<properties resource="mybatis.properties" />
+	<!--数据库驱动包路径 -->
+	<classPathEntry location="${drive.class.path}" />
+	<context id="MySQLTables" targetRuntime="MyBatis3">
+		<!--关闭注释 -->
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+			<!-- 是否取消注释 -->
+			<property name="suppressDate" value="true" />
+			<!-- 是否生成注释代时间戳 -->
+		</commentGenerator>
+		<!--数据库连接信息 -->
+		<jdbcConnection
+                driverClass="${jdbc.driver}"
+			    connectionURL="${jdbc.url}"
+                userId="${jdbc.username}"
+                password="${jdbc.password}">
+		</jdbcConnection>
+		<!--生成的model 包路径 -->
+		<javaModelGenerator targetPackage="${model.package}"
+			targetProject="${target.project.java}">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		<!--生成xml mapper文件 路径 -->
+		<sqlMapGenerator targetPackage="${xml.mapper.package}"
+			targetProject="${target.project.resources}">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		<!-- 生成的Dao接口 的包路径 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="${dao.package}" targetProject="${target.project.java}">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		<!--地址表-->
+		<table tableName="address" domainObjectName="Address"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		<!--顾客登陆表-->
+		<table tableName="login_inf" domainObjectName="LoginInf"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		<!--顾客信息表-->
+		<table tableName="customer_inf" domainObjectName="CustomerInf"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		<!--登录日志-->
+		<table tableName="login_log" domainObjectName="LoginLog"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		<!--品牌表-->
+		<table tableName="brand_info" domainObjectName="BrandInfo"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		<!--商品类别表-->
+		<table tableName="category_info" domainObjectName="CategoryInfo"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		<!--商品类别关联表-->
+		<table tableName="product_category" domainObjectName="ProductCategory"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		<!--商品属性类别表-->
+		<table tableName="pro_attribute" domainObjectName="ProAttribute"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		<!--商品属性表-->
+		<table tableName="pro_attribute_item" domainObjectName="ProAttributeItem"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		<!--商品图片表-->
+		<table tableName="product_pic" domainObjectName="ProductPic"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		<!--商品信息表-->
+		<table tableName="product_info" domainObjectName="ProductInfo"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		<!--订单表-->
+		<table tableName="order_info" domainObjectName="OrderInfo"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		<!--订单详情表-->
+		<table tableName="product_order" domainObjectName="ProductOrder"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		<!--购物车表-->
+		<table tableName="cart_info" domainObjectName="CartInfo"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+		<!--手机表-->
+		<table tableName="phone" domainObjectName="Phone"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+		<property name="useActualColumnNames" value="false" />
+		</table>
+		<table tableName="province_info" domainObjectName="ProvinceInfo"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+
+		<table tableName="city_info" domainObjectName="CityInfo"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+
+		<table tableName="district_info" domainObjectName="DistrictInfo"
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+	</context>
+</generatorConfiguration>

@@ -1,0 +1,424 @@
+.a_top {
+    width: 990px;
+    margin: 0 auto;
+    height: 95px;
+}
+
+#a_logoe {
+    width: 300px;
+    height: 60px;
+    margin: 10px;
+    float: left;
+}
+
+.a_logo {
+    width: 170px;
+    height: 60px;
+    background-repeat: no-repeat;
+    float: left;
+}
+
+.a_logob {
+    margin: 0px;
+    padding: 0px;
+}
+
+.a_font {
+    font-size: x-large;
+    display: block;
+    text-align: end;
+    padding-top: 15px;
+}
+
+.a_f {
+    float: right;
+}
+
+.a_tip {
+    display: inline-block;
+    width: 18px;
+    height: 14px;
+    margin: 0 5px;
+    background: url(../images/loginImg/xinxifuhao.png) no-repeat;
+    overflow: hidden;
+    vertical-align: middle;
+}
+.a_link{
+    width: 100%;
+    height: 20px;
+    position: absolute;
+    background: #f4f4f4;
+}
+.b_bg {
+    display: block;
+    width: 16px;
+    height: 16px;
+    padding-right: 5px;
+    background: #f4f4f4 url("../images/loginImg/icon-tips.png") 50% no-repeat;
+    background-size: 16px 16px;
+    float: left;
+}
+
+#b_line {
+    width: 800px;
+    height: 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+    margin-left: 330px;
+}
+
+#c_body {
+    background-color: #c81623;
+    margin-top: 25px;
+    width: 1349px;
+}
+
+#c_bodyc {
+    width: 990px;
+    height: 475px;
+    background-image: url("../images/loginImg/denglujingdong.png");
+    background-repeat: no-repeat;
+    margin: 0 auto;
+}
+
+#c_login {
+    width: 346px;
+    height: 428px;
+    float: right;
+    background-color: white;
+    margin-top: 10px;
+
+
+}
+
+#c_box {
+    width: 346px;
+    height: 20px;
+    background-color: antiquewhite;
+}
+
+#c_logintip {
+    padding: 10px;
+    text-align: center;
+    width: 300px;
+    line-height: 7px;
+}
+
+#c_logintip .b_bg {
+    background-color: antiquewhite;
+    margin-top: -4px;
+    margin-left: 8px;
+}
+
+.c_loginw {
+    width: 123px;
+    height: 55px;
+    float: left;
+    text-align: center;
+    line-height: 55px;
+}
+#c_loginw {
+    width: 123px;
+    height: 55px;
+    float: left;
+    text-align: center;
+    line-height: 55px;
+}
+
+.c_wh {
+    width: 306px;
+    height: 270px;
+    padding: 20px 18px 20px 20px;
+    display: none;
+}
+.c_wr{
+    width: 306px;
+    height: 270px;
+    padding: 20px;
+}
+.way1 {
+    width: 306px;
+    height: 168px;
+    margin-top: 55px;
+
+}
+
+.font1 {
+    font-size: 13px;
+}
+
+.www {
+    position: relative;
+    width: 147px;
+    height: 147px;
+    left: 69px;
+    padding: 8px;
+    border: 1px solid #f4f4f4;
+    line-height: 350px;
+    float: left;
+}
+.www img{
+    display: block;
+    width: 147px;
+    height: 147px;
+}
+#loghelp{
+    position: relative;
+    display: none;
+    width: 135px;
+    height: 159px;
+    float: right;
+    margin-bottom: 8px;
+    background: #9f9f9f url("../images/loginImg/phone-orange.png") 5% no-repeat;
+}
+.c_www{
+    text-align: center;
+    height: 20px;
+    position: relative;
+    float: left;
+}
+.c_www ul{
+    margin: 0 auto;
+    margin-left: 80px;
+}
+.redf {
+    color: red;
+    font-size: 14px;
+}
+
+.way2 {
+    width: 306px;
+    height: 192px;
+    position: relative;
+    margin-top: 70px;
+}
+
+#c_logine {
+    width: 346px;
+    height: 310px;
+    background-color: lime;
+    float: right;
+    padding: 20px;
+}
+
+#c_other {
+    width: 306px;
+    height: 50px;
+    padding: 10px 20px;
+    border-top: 1px solid #bdbdbd;
+    margin-top: 30px;
+}
+
+.qq {
+    display: inline-block;
+    height: 35px;
+    position: relative;
+    padding-left: auto;
+    margin-top: 16px;
+}
+
+.qqa {
+    display: block;
+    width: 19px;
+    height: 18px;
+    background: #f4f4f4 url("../images/loginImg/QQ-weixin.png") no-repeat;
+    float: left;
+}
+
+.w {
+    background-position: -19px 0;
+}
+
+.c_set {
+    font-size: 14px;
+    line-height: 40px;
+    width: 80px;
+    height: 50px;
+    padding-left: 120px;
+}
+
+.c_set a {
+    display: inline-block;
+    color: #c81623;
+}
+
+.c_set a b {
+    width: 16px;
+    height: 16px;
+    background: url("../images/loginImg/smalltips.png") -104px -75px no-repeat;
+    vertical-align: middle;
+    margin-right: 5px;
+    padding-left: 19px;
+}
+
+.emp {
+    width: 306px;
+    height: 23px;
+    margin: 5px 0;
+    float: left;
+}
+.msg-error{
+    position: relative;
+    background: #ffebeb;
+    color: #e4393c;
+    border: 1px solid #faccc6;
+    padding: 3px 10px 3px 40px;
+    line-height: 15px;
+    height: auto;
+    display: none;
+}
+.msg-error b{
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    display: block;
+    margin-top: -8px;
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+    background: url(//misc.360buyimg.com/user/passport/1.0.0/widget/login-form-2018-0827/i/pwd-icons-new.png) -104px -49px no-repeat;
+}
+#c_act {
+    width: 306px;
+    height: 209px;
+}
+
+.c_user {
+    width: 304px;
+    height: 38px;
+    margin-bottom: 30px;
+}
+.c_lable{
+    position: absolute;
+    z-index: 3;
+    top: 1px;
+    left: 1px;
+    width: 38px;
+    height: 37px;
+    border-right: 1px solid #bdbdbd;
+    background: url("../images/loginImg/smalltips.png") no-repeat;
+}
+input{
+    background-color: white;
+    cursor: text;
+}
+.c_username{
+    width: 254px;
+    height: 15px;
+    padding: 10px 0 12px 50px;
+    text-align: initial;
+    float: none;
+    font-size: 14px;
+    font-family: '\5B8B\4F53';
+}
+.lab{
+    background-position: -48px 0;
+    margin-top: 69px;
+    margin-left: 1px;
+    top: 0;
+    left: 0;
+}
+.c_fpass {
+    height: 18px;
+    margin-bottom: 15px;
+    color: #666666;
+    border: 0px;
+}
+.c_fpass span{
+    display: block;
+    float: right;
+
+}
+.loginbutton{
+    margin: 0px auto;
+    text-align: center;
+    font-size: large;
+    line-height: 38px;
+}
+.loginbutton a{
+    color: white;
+}
+.c_login {
+    height: 34px;
+    background-color: red;
+    margin-bottom: 10px;
+}
+
+.c_cdown {
+    display: block;
+    width: 266px;
+    height: auto;
+    line-height: 25px;
+    font-family: "Microsoft YaHei";
+    color: #999;
+}
+
+.c_cdown ul {
+    display: block;
+    float: left;
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+.c_cdown li {
+    text-align: left;
+    position: relative;
+    margin-right: 18px;
+
+
+}
+
+.c_cdown li b {
+    width: 25px;
+    height: 25px;
+    display: block;
+    background: url("../images/loginImg/qr-coagent.png") no-repeat;
+    margin: 0 auto;
+    position: absolute;
+    float: left;
+}
+
+.c_cdown li em {
+    display: block;
+    padding-left: 27px;
+}
+
+.faster {
+    background-position: -27px;
+}
+
+.safe {
+    background-position: -54px;
+}
+.d_down{
+    width: 990px;
+    height: 86px;
+    padding-bottom: 30px;
+}
+.d_tem{
+    width: 990px;
+    margin: 10px auto;
+    padding-left: 110px;
+}
+.d_link{
+    width: 990px;
+    height: 18px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 14px;
+
+}
+.d_link a{
+    display: block;
+    margin: 0 5px;
+    float: left;
+}
+.d_link span{
+    display: block;
+    float: left;
+}
+.d_dd{
+    width: 990px;
+    height: 18px;
+    margin: 10px 0;
+}

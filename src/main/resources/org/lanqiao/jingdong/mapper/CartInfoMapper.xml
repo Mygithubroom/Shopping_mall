@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lanqiao.jingdong.mapper.CartInfoMapper" >
+  <resultMap id="BaseResultMap" type="org.lanqiao.jingdong.entity.CartInfo" >
+    <id column="cart_id" property="cartId" jdbcType="INTEGER" />
+    <result column="login_id" property="loginId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="product_count" property="productCount" jdbcType="INTEGER" />
+    <result column="product_total" property="productTotal" jdbcType="INTEGER" />
+    <result column="tatol" property="tatol" jdbcType="INTEGER" />
+    <collection property="productInfoList" resultMap="ProductInfoResultMap"/>
+  </resultMap>
+  <resultMap type="org.lanqiao.jingdong.entity.ProductInfo" id="ProductInfoResultMap">
+  <id jdbcType="INTEGER" property="productId" column="product_id"/>
+  <result jdbcType="VARCHAR" property="productName" column="product_name"/>
+  <result jdbcType="INTEGER" property="brandId" column="brand_id"/>
+  <result jdbcType="DECIMAL" property="price" column="price"/>
+  <association property="productPic" resultMap="ProductPicResultMap"/>
+</resultMap>
+  <resultMap type="org.lanqiao.jingdong.entity.ProductPic" id="ProductPicResultMap">
+  <id jdbcType="INTEGER" property="productPicId" column="product_pic_id"/>
+  <result jdbcType="INTEGER" property="productId" column="product_id"/>
+  <result jdbcType="VARCHAR" property="mainPicDesc" column="main_pic_desc"/>
+  <result jdbcType="VARCHAR" property="mainPicUrl" column="main_pic_url"/>
+  <result jdbcType="VARCHAR" property="littlePicUrl" column="little_pic_url"/>
+  <result jdbcType="VARCHAR" property="cartPicUrl" column="cart_pic_url"/>
+  <result jdbcType="VARCHAR" property="cartPicDesc" column="cart_pic_desc"/>
+</resultMap>
+
+  <sql id="Base_Column_List" >
+    cart_id, login_id, product_id, product_count, product_total, tatol
+  </sql>
+  <select id="getAllCart" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+SELECT p_info.product_id ,p_info.product_name,p_info.price ,p_pic.cart_pic_url,p_pic.cart_pic_desc,c_info.product_count
+FROM product_info p_info,product_pic p_pic ,cart_info c_info
+WHERE p_info.product_id=p_pic.product_id and c_info.product_id=p_info.product_id and p_pic.product_id
+IN(select product_id from cart_info where login_id = #{loginId,jdbcType=INTEGER});
+</select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cart_info
+    where cart_id = #{cartId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cart_info
+    where cart_id = #{cartId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lanqiao.jingdong.entity.CartInfo" >
+    insert into cart_info (cart_id, login_id, product_id, 
+      product_count, product_total, tatol
+      )
+    values (#{cartId,jdbcType=INTEGER}, #{loginId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
+      #{productCount,jdbcType=INTEGER}, #{productTotal,jdbcType=INTEGER}, #{tatol,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.lanqiao.jingdong.entity.CartInfo" >
+    insert into cart_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cartId != null" >
+        cart_id,
+      </if>
+      <if test="loginId != null" >
+        login_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="productCount != null" >
+        product_count,
+      </if>
+      <if test="productTotal != null" >
+        product_total,
+      </if>
+      <if test="tatol != null" >
+        tatol,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cartId != null" >
+        #{cartId,jdbcType=INTEGER},
+      </if>
+      <if test="loginId != null" >
+        #{loginId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productCount != null" >
+        #{productCount,jdbcType=INTEGER},
+      </if>
+      <if test="productTotal != null" >
+        #{productTotal,jdbcType=INTEGER},
+      </if>
+      <if test="tatol != null" >
+        #{tatol,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lanqiao.jingdong.entity.CartInfo" >
+    update cart_info
+    <set >
+      <if test="loginId != null" >
+        login_id = #{loginId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productCount != null" >
+        product_count = #{productCount,jdbcType=INTEGER},
+      </if>
+      <if test="productTotal != null" >
+        product_total = #{productTotal,jdbcType=INTEGER},
+      </if>
+      <if test="tatol != null" >
+        tatol = #{tatol,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cart_id = #{cartId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lanqiao.jingdong.entity.CartInfo" >
+    update cart_info
+    set login_id = #{loginId,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER},
+      product_count = #{productCount,jdbcType=INTEGER},
+      product_total = #{productTotal,jdbcType=INTEGER},
+      tatol = #{tatol,jdbcType=INTEGER}
+    where cart_id = #{cartId,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByProductId" parameterType="java.lang.Integer">delete from cart_infowhere product_id = #{productId,jdbcType=INTEGER} </delete>
+</mapper>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索页面</title>
+    <link href="css/search.css" rel="stylesheet">
+    <link href="css/jdBase.css" rel="stylesheet">
+    <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
+    <script src="js/jquery.validate.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script>
+        $(function () {
+                var searchText;
+                var brandIdToSearch;
+                var threeCateToSearch;
+                searchText = sessionStorage.getItem("searchText");
+
+                var form = new Vue({
+                    el:".form",
+                    data:{
+                        search_text: searchText,
+                    }
+                });
+                var crumbsBar = new Vue({
+                    el:".crumbsBar",
+                    data:{
+                        searchInfo: searchText,
+                    }
+                });
+                var goodsList = new Vue({
+                    el:".goodsList",
+                    data:{
+                        productInfoList:[]
+                    },
+                    methods: {
+                        productCLick: function (productId) {
+                            sessionStorage.setItem("productId", productId)
+                            window.open("http://localhost:8080/addcart.html");
+                        }
+                    }
+                });
+                var selector = new Vue({
+                    el:".selector",
+                    data:{
+                        brandInfoList:[],
+                        cateTwoInfoList:[],
+                        cateThreeInfoListArr:[]
+                    },
+                    methods: {
+                        brandClick: function (brandId) {
+                            brandIdToSearch = brandId;
+                            searchText = form.search_text;
+                            threeCateToSearch = null;
+                            forProduct();
+                            change_page.pageNum = 1;
+                            f_pager.pageNum = 1;
+                        },
+                        cateThreeClick: function (categoryId) {
+                            threeCateToSearch = categoryId;
+                            brandIdToSearch = null;
+                            searchText = form.search_text;
+                            forProduct();//
+                            change_page.pageNum = 1;
+                            f_pager.pageNum = 1;
+                        }
+
+                    }
+                });
+                var change_page = new Vue({
+                    el:".change_page",
+                    data:{
+                        totalCount:1,
+                        totalPageCount:1,
+                        pageNum:1,
+                        toPageNum: 0,
+                        isWhiteBack: false
+                    },
+                    methods:{
+                        pagePrev: function () {
+                            if(this.pageNum <= 1){
+                                alert("当前是最前页")
+                            }else{
+                                this.pageNum--;
+                                f_pager.pageNum--;
+                                forProduct();
+                            }
+                        },
+                        pageNext: function () {
+                            if(this.pageNum >= this.totalPageCount){
+                                alert("当前是最后一页")
+                            }else{
+                                this.pageNum++;
+                                f_pager.pageNum++;
+                                forProduct();
+                            }
+                        },
+                        toPage: function () {
+                            this.pageNum = this.toPageNum;
+                            f_pager.pageNum = this.toPageNum;
+                            forProduct();
+                        }
+                    }
+                });
+                var f_pager = new Vue({
+                   el:".f_pager",
+                   data: {
+                       totalCount:0,
+                       totalPageCount :0,
+                       pageNum: 0,
+                   },
+                    methods:{
+                        pagePrev: function () {
+                            change_page.pagePrev();
+
+                        },
+                        pageNext: function () {
+                            change_page.pageNext();
+                        }
+                    }
+                });
+
+                //由二级类目id和商品名找出对应三级类目
+                function forCateThree(cateTwo, index) {
+                    $.ajax({
+                        url: "http://localhost:8080/getCateTwoForCateThree",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            cateTwo: cateTwo,
+                            productName: searchText
+                        },
+                        success: function (categoryInfoList) {
+                            selector.cateThreeInfoListArr.splice(index, 0, categoryInfoList);
+                        }
+
+                    })
+                }
+                //由商品名找出对应二级类目
+                function forCateTwo(){
+                    $.ajax({
+                        url:"http://localhost:8080/getNameForCateTwo",
+                        type: "post",
+                        dataType: "json",
+                        data:{
+                            productName: searchText
+                        },
+                        success: function (categoryInfoList) {
+                            selector.cateTwoInfoList =  categoryInfoList;
+                            selector.cateThreeInfoListArr.length = 0;//清空数组
+                            categoryInfoList.forEach(function (categoryInfo, index) {
+                                forCateThree(categoryInfo.categoryId, index);
+                            });
+                        }
+                    });
+                }
+                //由商品找出对应品牌
+                function forBrand(){
+                    $.ajax({
+                        url:"http://localhost:8080/getNameForBrand",
+                        type: "post",
+                        dataType: "json",
+                        data:{
+                            productName: searchText,
+                        },
+                        success: function (BrandInfoList) {
+                            selector.brandInfoList =  BrandInfoList;
+                        }
+                    });
+                }
+                //根据页码跟输入信息或品牌或种类搜索商品
+                function forProduct(){
+                    var productVo = {
+                        "brandId": brandIdToSearch,
+                            "categoryId": threeCateToSearch,
+                            "productName": searchText,
+                            "pageNum": change_page.pageNum,
+                            "pageSize": 4,
+                    }
+                    $.ajax({
+                        url: "http://localhost:8080/getNameForProduct",
+                        type: "post",
+                        dataType: "json",
+                        data: JSON.stringify(productVo) ,
+                        contentType: "application/json;charset-UTF-8",
+                        success: function (productMap) {
+                            change_page.totalCount = productMap.totalCount;
+                            change_page.totalPageCount = Math.ceil(productMap.totalCount/4);
+                            f_pager.totalCount = change_page.totalCount;
+                            f_pager.totalPageCount = change_page.totalPageCount;
+                            goodsList.productInfoList = productMap.productInfoList;
+                            //由商品找出对应品牌
+                            forBrand();
+                            //由商品找出对应二级类目
+                            forCateTwo();
+                        }
+                    });
+                }
+
+            //form搜索方法
+            function formSearch(){
+
+                brandIdToSearch = null;
+                threeCateToSearch = null;
+                forProduct();
+                //每次搜索pageNum置1
+                change_page.pageNum = 1;
+                f_pager.pageNum = 1;
+            }
+            //form搜索
+            formSearch();//初始化搜索
+            $(".form_button").click(function () {
+                searchText = form.search_text;
+                formSearch();
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $(".sl_e_more i").hover(function () {
+                $(this).slideToggle("fast");
+            })
+        })
+
+    </script>
+    <script>
+        $(function () {
+            $(".f_select").click(
+                function () {
+                $(this).children(".gou").toggle(10);}
+            );
+        })
+    </script>
+
+</head>
+<body>
+    <div id="shortcut">
+
+        <div class="w">
+            <div class="tar_home">
+                <i class="iconfont"></i>
+                <a href="//www.jd.com/" target="_blank">京东首页</a>
+            </div>
+            <ul id="myCity">
+            <li>
+                <a>
+                    <i class="iconfont iconfont-location red"></i>
+                    <span href="#">福建</span>
+                </a>
+            </li>
+        </ul>
+            <ul id="menu">
+            <li class="dt">
+                <a href="#">你好，请登录</a>
+                <a href="#" class="red">免...</a>
+            </li>
+            <li class="spacer"></li>
+            <li class="dt"><a href="#">我的订单</a></li>
+            <li class="spacer"></li>
+            <li class="dt"><a href="#">我的京东</a><i class="iconfont"></i></li>
+            <li class="spacer"></li>
+            <li class="dt"><a href="#">京东会员</a></li>
+            <li class="spacer"></li>
+            <li class="dt"><a href="#" class="red">企业采购</a> <i class="iconfont"></i></li>
+            <li class="spacer"></li>
+            <li class="dt"><a href="#">客户服务</a> <i class="iconfont"></i></li>
+            <li class="spacer"></li>
+            <li class="dt"><a href="#">网站导航</a> <i class="iconfont"></i></li>
+            <li class="spacer"></li>
+            <li class="dt"><a href="#">手机京东</a></li>
+        </ul>
+        </div>
+    </div>
+    <div class="wc">
+        <div class="logo2"></div>
+        <div class="form">
+            <input name="search_text" v-model="search_text" class="form_input" style="border: none" type="text">
+            <div  class="form_camera">
+                <img src="images/searchImages/camera.png">
+                <input class="form_file" type="file" >
+            </div>
+            <div class="form_button"><i>搜索</i><button></button></div>
+        </div>
+        <div id="shopping_car" class="cw-icon">
+            <a  style="color: red; font-size: 13px;margin-top: 8px" href="#" style="font-size: 14px">我的购物车</a>
+            <i class="iconfont car_title" style="color: red"></i>
+            <i class="ci-count" id="shopping-amount">0</i>
+        </div>
+        <div class="haveLine">
+                <ul>
+                    <li class="word"><a href="#" class="red">抢大额神券</a></li>
+                    <li class="spacer" style="margin-top: 4px"></li>
+                    <li class="word"><a href="#">正品好药</a></li>
+                    <li class="spacer" style="margin-top: 4px"></li>
+                    <li class="word"><a href="#">空调锯惠</a></li>
+                    <li class="spacer" style="margin-top: 4px"></li>
+                    <li class="word"><a href="#">开关5折</a></li>
+                    <li class="spacer" style="margin-top: 4px"></li>
+                    <li class="word"><a href="#">美妆</a></li>
+                    <li class="spacer" style="margin-top: 4px"></li>
+                    <li class="word"><a href="#">鞋靴清仓</a></li>
+                    <li class="spacer" style="margin-top: 4px"></li>
+                    <li class="word"><a href="#">每100-5</a></li>
+                    <li class="spacer" style="margin-top: 4px"></li>
+                    <li class="word"><a href="#">纸品生活</a></li>
+                    <li class="spacer" style="margin-top: 4px"></li>
+                    <li class="word"><a href="#">养殖</a></li>
+                </ul>
+        </div>
+    </div>
+    <div class="nav">
+        <div class="nav_dt">
+            <a style="font: 14px 'Heiti SC'; color: white; line-height: 35px";>全部商品分类</a>
+        </div>
+        <div class="nav_dd">
+            <ul>
+                <li>
+                    <a>京东时尚</a>
+                </li>
+                <li>
+                    <a>美妆馆</a>
+                </li>
+                <li>
+                    <a>超市</a>
+                </li>
+                <li>
+                    <a>生鲜</a>
+                </li>
+                <li>
+                    <a>海囤全球</a>
+                </li>
+                <li>
+                    <a>闪购</a>
+                </li>
+                <li>
+                    <a>拍卖</a>
+                </li>
+                <li>
+                    <a>金融</a>
+                </li>
+            </ul>
+        </div>
+        <div class="nav_line"></div>
+    </div>
+    <div class="crumbsBar">
+        <div>
+            <a>全部结果</a>
+            <strong><i>〉</i>“{{searchInfo}}”</strong>
+<!--            <strong><i>〉</i>“{{searchInfo}}”</strong>-->
+        </div>
+    </div>
+    <div class="selector" style="background-color:#cccccc;">
+        <div class="line_1px"></div>
+        <div class="s_brand">
+            <div class="s_key " style="height: 64px"><strong style="line-height: 30px; padding-left: 10px" >品牌：</strong></div>
+            <div class="s_value height64">
+                <ul>
+                    <li v-for="(brandInfo, index) in brandInfoList" style="margin-right: 5px"><a v-on:click="brandClick(brandInfo.brandId)"><img :src="brandInfo.brandLogoUrl"></a></li>
+                </ul>
+                <a class="sl_e_more" >更多<i>∨</i></a>
+                <a class="sl_e_more" ><i style="font-size: 20px ; margin-left: -3px">+</i>多选</a>
+            </div>
+        </div>
+        <div class="line_1px"></div>
+        <div class="s_category" v-for="(cateTwoInfo, pindex) in cateTwoInfoList">
+            <div class="s_key"><strong style="line-height: 30px; padding-left: 10px">{{cateTwoInfo.categoryName}}:</strong></div>
+            <div class="s_value">
+                <ul>
+                    <li v-for="(cateThreeInfo, cindex) in cateThreeInfoListArr[pindex]"><a v-on:click="cateThreeClick(cateThreeInfo.categoryId)">{{cateThreeInfo.categoryName}}</a></li>
+                </ul>
+                <a class="sl_e_more" style="margin-top: 5px">更多<i>∨</i></a>
+                <a class="sl_e_more" style="margin-top: 5px"><i style="font-size: 20px ; margin-left: -3px">+</i>多选</a>
+            </div>
+            <div class="line_1px"></div>
+        </div>
+        <div class="s_senior">
+            <div class="s_key"><span style="line-height: 30px; padding-left: 10px">高级选项：</span></div>
+            <div class="s_value">
+                <a>版型<i>∨</i></a>
+                <a>适用人群<i>∨</i></a>
+                <a>更多<i>∨</i></a>
+            </div>
+        </div>
+        <div class="line_1px"></div>
+    </div>
+    <div class="m_list">
+        <div class="goodWrap">
+            <h3>精选商品</h3>
+            <div class="mc">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <img src="//img11.360buyimg.com/n2/jfs/t1/46669/24/5820/102775/5d3680a7Ea13307e4/f063445deb6a0014.jpg">
+                        </a>
+                        <div class="p_price red">￥<i>269.00</i></div>
+                        <div class="p_name">
+                            <a href="#"><span class="red">飞利浦</span>（PHILIPS）男士电动<span class="red">剃须刀</span>全身水洗剃胡刀</a>
+                        </div>
+                        <div class="p_comm">已有<span style="color:#005aa0">7100+</span>人评价  </div>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="//img14.360buyimg.com/n2/jfs/t1/43353/15/69/307385/5cc04303E32d7aa85/bbc4a1a98a0c7ece.jpg">
+                        </a>
+                        <div class="p_price red">￥<i>269.00</i></div>
+                        <div class="p_name">
+                            <a href="#" >酷人（kuren）电动<span class="red">剃须刀</span>三刀头刮胡刀多功能男士</a>
+                        </div>
+                        <div class="p_comm">已有<span style="color:#005aa0">7100+</span>人评价  </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="f_line" style="background-color: #f1f1f1; margin-top: 10px">
+            <div class="f_sort">
+                <a href="#"><span>综合&nbsp;</span><i>↓</i></a>
+                <a href="#"><span>销量&nbsp;</span><i>↓</i></a>
+                <a href="#"><span>评论数&nbsp;</span><i>↓</i></a>
+                <a href="#"><span>新品&nbsp;</span><i>↓</i></a>
+                <a href="#" class="s-price"><span class="sort-price">价格&nbsp;</span><i class="price-up">△</i><i class="price-down">▽</i></a>
+            </div>
+            <div class="f-datagrid">
+                <a>
+                    <span style="height:15%;"></span>
+                </a>
+                <a><span style="height:85%;"></span></a>
+                <a><span style="height:65%;"></span></a>
+                <a><span style="height:15%;"></span></a>
+                <a><span style="height:15%;"></span></a>
+            </div>
+            <div class="p_bet" >
+                <input type="text" value="￥">
+            </div>
+            <i class="my-">-</i>
+            <div class="p_bet">
+                <input  type="text" value="￥">
+            </div>
+            <div class="f_pager">
+                <div class="f-result-sum">共<span style="color:#000000">{{totalCount}}</span>件商品</div>
+                <div id="J_topPage" class="f-pager">
+                    <span class="fp-text"><b style="color:#e4393c">{{pageNum}}</b><em>/</em><i>{{totalPageCount}}</i></span>
+                    <a class="fp-prev" href="#" v-on:click="pagePrev">&lt;</a>
+                    <a class="fp-next"  v-on:click="pageNext" title="使用方向键右键也可翻到下一页哦！">&gt;</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="f_line" style="background-color: #f9f9f9">
+            <div class="f_store">
+                <div class="fs_cell">配送至</div>
+                <div class="ui-area-text-wrap">
+                    <div class="ui-area-text" title="福建福州市长乐区江田镇">福建福州市长乐区江田镇</div>
+                    <b style="font: 30px 宋体;margin-top: -22px ;float: right">ˇ</b>
+                </div>
+            </div>
+            <div class="f-feature">
+                <ul>
+                    <li><a class="f_select"><i class="kuang">□</i><i class="gou">√</i><i >京东物流</i></a></li>
+                    <li><a class="f_select"><i class="kuang">□</i><i class="gou">√</i><i >211限时达</i></a></li>
+                    <li><a class="f_select"><i class="kuang">□</i><i class="gou">√</i><i >货到付款</i></a></li>
+                    <li><a class="f_select"><i class="kuang">□</i><i class="gou">√</i><i >仅显示有货</i></a></li>
+                    <li><a class="f_select"><i class="kuang">□</i><i class="gou">√</i><i >海囤全球</i></a></li>
+                    <li><a class="f_select"><i class="kuang">□</i><i class="gou">√</i><i >可配送全球</i></a></li>
+                    <li><a class="f_select"><i class="kuang">□</i><i class="gou">√</i><i >新品</i></a></li>
+                </ul>
+            </div>
+            <div class="f-search">
+                <input type="text" value="在结果中搜索">
+                <a>确定</a>
+            </div>
+        </div>
+        <div class="goodsList">
+            <ul>
+                <li style="margin-left: 0px"  v-for="(productInfo, index) in productInfoList">
+                    <div class="gl-i-wrap" style="height: 486px">
+                        <a v-on:click="productCLick(productInfo.productId)" href="#" class="p_img" style="margin-top: 10px">
+                            <img :src="productInfo.productPic.searchPicUrl">
+                        </a>
+                        <div class="ps_wrap">
+                            <a class="wrap_prev" href="#"><</a>
+                            <a class="wrap_next" href="#">></a>
+                            <ul style="margin-left: 10px">
+                                <li><a  class="img_litle"><img :src="productInfo.productPic.searchLittlePicUrl"></a></li>
+                            </ul>
+                        </div>
+                        <div v-on:click="productCLick(productInfo.productId)" class="p_price red" style="font-size: 20px; margin-top: 0px">￥<i>{{productInfo.price}}</i></div>
+                        <a  href="#" class="p_name pro_name" style="height: 36px; width: 216px;margin-top: 10px">{{productInfo.productName}}</a>
+                        <div class="p_comm" style="margin:5px 10px 0px 10px;color: #999999"><span style="color:#005aa0;">7100+</span>条评价  </div>
+                        <span class="p_shop">
+                            <a class="p_shop_name" href="#">京东自营</a>
+                            <a class="im-01" href="#">
+                                <img src="//img14.360buyimg.com/uba/jfs/t26764/156/1205787445/713/9f715eaa/5bc4255bN0776eea6.png">
+                            </a>
+                        </span>
+                        <div class="icons">
+                            <i class="icons1" >满减</i>
+                            <i class="icons2">险</i>
+                            <i class="icons3">新品</i>
+                            <i class="icons4">2件8折</i>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul>
+<!--                <li style="margin-left: 0px">-->
+<!--                    <div class="gl-i-wrap">-->
+<!--                        <a href="#" class="p_img">-->
+<!--                            <img  src="//img11.360buyimg.com/n7/jfs/t1/54880/30/6259/76443/5d3dbe64E277757ac/53f87a19ae5d382f.jpg">-->
+<!--                        </a>-->
+<!--                        <div class="p_price red" style="font-size: 20px;">￥<i>269.00</i></div>-->
+<!--                        <a href="#" class="p_name" style="height: 36px; width: 216px;margin-top: 10px"><span class="red">飞利浦</span>（PHILIPS）男士电动<span class="red">剃须刀</span>全身水洗剃胡刀氨基酸的毕竟俺看不懂就干啥呢哈哈哈哈哈阿拉啦啦看见你发的健康减减肥</a>-->
+<!--                        <div class="p_comm" style="margin:5px 10px 0px 10px;color: #999999"><span style="color:#005aa0;">7100+</span>条评价  </div>-->
+<!--                        <span class="p_shop">-->
+<!--                            <a class="p_shop_name" href="#">博帝服饰专营店</a>-->
+<!--                            <a class="im-01" href="#">-->
+<!--                                <img src="//img14.360buyimg.com/uba/jfs/t26764/156/1205787445/713/9f715eaa/5bc4255bN0776eea6.png">-->
+<!--                            </a>-->
+<!--                        </span>-->
+<!--                        <div class="icons">-->
+<!--                            <i class="icons1" >满减</i>-->
+<!--                            <i class="icons2">险</i>-->
+<!--                            <i class="icons3">新品</i>-->
+<!--                            <i class="icons4">2件8折</i>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </li>-->
+            </ul>
+        </div>
+        <div class="change_page">
+            <a v-on:click="pagePrev" class="pn_prev" ><i>〈</i><em>上一页</em></a>
+            <a class="curr" v-for="index in totalPageCount"><div v-if="index !== pageNum">{{index}}</div><div style="background-color: white" v-else>{{index}}</div></a>
+            <a class="pn_break">...</a>
+            <a class="pn_next" v-on:click="pageNext"><em>下一页</em><i>〉</i></a>
+            <span class="p_skip">
+                <em>共<b>{{totalPageCount}}</b>页&nbsp;&nbsp;到第</em>
+                <input type="text" value="1" v-model="toPageNum">
+                <em>页</em>
+                <a v-on:click="toPage">确定</a>
+            </span>
+        </div>
+    </div>
+
+    <div id="footer">
+        <iframe id="footerFrame" name="footerFrame" src="footer.html" width="990" height="400" frameborder="0" scrolling="no"></iframe>
+    </div>
+
+
+
+</body>
+</html>

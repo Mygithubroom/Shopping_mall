@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link href="CSS/base.css" rel="stylesheet">
+    <link href="CSS/register.css" rel="stylesheet">
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/jquery.validate.regex.js"></script>
+<!--    <script src="js/register.js"></script>-->
+    <script src="js/vue.min.js"></script>
+    <script>
+        $(function () {
+            $("#main_body>span").append($("input[name='phone']").val())
+            $("#myForm").validate({
+                errorPlacement:'span',
+                errorPlacement: function(error, element){
+                    error.appendTo(element.parent());
+                    error.addClass("red");
+                },
+                rules:{
+                    phone:{
+                        required: true,
+                        regex: /^1\d{10}$/
+                    },
+                },
+                messages:{
+                    phone:{
+                        required: "请输入内容",
+                        regex: "手机号码为11位数字"
+                    }
+                },
+                submitHandler:function(form){
+                    $.ajax({
+                        url:"/register",
+                        dataType:"text",
+                        type:"post",
+                        data:{"phoneNum":$("input[name='phone']").val()},
+                        success:function () {
+                            alert(1)
+                            form.submit();
+                        }
+                    })
+                }
+            });
+        })
+
+    </script>
+</head>
+<body>
+<div id="main_body">
+    <span>asdasd</span>
+    <div id="main_form">
+        <form id="myForm">
+            <div id="form_1">
+                <div class="choose1">
+                    <select>
+                        <option>China</option>
+                        <option>Eng</option>
+                    </select>
+                    <input name="phone" id="phone" value="&nbsp;&nbsp;&nbsp;建议使用常用手机号" type="text">
+                </div>
+                <div id="phonec">
+                    <div id="phonec_left">!</div>
+                    &nbsp;验证完成后，你可以使用该手机登录或找回密码
+                </div>
+                <div class="choose2"><button class="button1" id="checkphone" value="" type="button">点击按钮进行验证</button></div>
+                <div class="choose2"><button class="button2" type="submit" id="toEnd">下一步</button></div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

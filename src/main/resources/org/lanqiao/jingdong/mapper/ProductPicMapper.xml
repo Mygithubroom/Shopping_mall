@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lanqiao.jingdong.mapper.ProductPicMapper" >
+  <resultMap id="BaseResultMap" type="org.lanqiao.jingdong.entity.ProductPic" >
+    <id column="product_pic_id" property="productPicId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="main_pic_desc" property="mainPicDesc" jdbcType="VARCHAR" />
+    <result column="main_pic_url" property="mainPicUrl" jdbcType="VARCHAR" />
+    <result column="little_pic_url" property="littlePicUrl" jdbcType="VARCHAR" />
+    <result column="search_pic_url" property="searchPicUrl" jdbcType="VARCHAR" />
+    <result column="search_little_pic_url" property="searchLittlePicUrl" jdbcType="VARCHAR" />
+    <result column="cart_pic_url" property="cartPicUrl" jdbcType="VARCHAR" />
+    <result column="cart_pic_desc" property="cartPicDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    product_pic_id, product_id, main_pic_desc, main_pic_url, little_pic_url, search_pic_url, 
+    search_little_pic_url, cart_pic_url, cart_pic_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
+    from product_pic
+    where product_id = #{product_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product_pic
+    where product_pic_id = #{productPicId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lanqiao.jingdong.entity.ProductPic" >
+    insert into product_pic (product_pic_id, product_id, main_pic_desc, 
+      main_pic_url, little_pic_url, search_pic_url, 
+      search_little_pic_url, cart_pic_url, cart_pic_desc
+      )
+    values (#{productPicId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{mainPicDesc,jdbcType=VARCHAR}, 
+      #{mainPicUrl,jdbcType=VARCHAR}, #{littlePicUrl,jdbcType=VARCHAR}, #{searchPicUrl,jdbcType=VARCHAR}, 
+      #{searchLittlePicUrl,jdbcType=VARCHAR}, #{cartPicUrl,jdbcType=VARCHAR}, #{cartPicDesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.lanqiao.jingdong.entity.ProductPic" >
+    insert into product_pic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="productPicId != null" >
+        product_pic_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="mainPicDesc != null" >
+        main_pic_desc,
+      </if>
+      <if test="mainPicUrl != null" >
+        main_pic_url,
+      </if>
+      <if test="littlePicUrl != null" >
+        little_pic_url,
+      </if>
+      <if test="searchPicUrl != null" >
+        search_pic_url,
+      </if>
+      <if test="searchLittlePicUrl != null" >
+        search_little_pic_url,
+      </if>
+      <if test="cartPicUrl != null" >
+        cart_pic_url,
+      </if>
+      <if test="cartPicDesc != null" >
+        cart_pic_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="productPicId != null" >
+        #{productPicId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="mainPicDesc != null" >
+        #{mainPicDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="mainPicUrl != null" >
+        #{mainPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="littlePicUrl != null" >
+        #{littlePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="searchPicUrl != null" >
+        #{searchPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="searchLittlePicUrl != null" >
+        #{searchLittlePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="cartPicUrl != null" >
+        #{cartPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="cartPicDesc != null" >
+        #{cartPicDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lanqiao.jingdong.entity.ProductPic" >
+    update product_pic
+    <set >
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="mainPicDesc != null" >
+        main_pic_desc = #{mainPicDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="mainPicUrl != null" >
+        main_pic_url = #{mainPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="littlePicUrl != null" >
+        little_pic_url = #{littlePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="searchPicUrl != null" >
+        search_pic_url = #{searchPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="searchLittlePicUrl != null" >
+        search_little_pic_url = #{searchLittlePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="cartPicUrl != null" >
+        cart_pic_url = #{cartPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="cartPicDesc != null" >
+        cart_pic_desc = #{cartPicDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where product_pic_id = #{productPicId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lanqiao.jingdong.entity.ProductPic" >
+    update product_pic
+    set product_id = #{productId,jdbcType=INTEGER},
+      main_pic_desc = #{mainPicDesc,jdbcType=VARCHAR},
+      main_pic_url = #{mainPicUrl,jdbcType=VARCHAR},
+      little_pic_url = #{littlePicUrl,jdbcType=VARCHAR},
+      search_pic_url = #{searchPicUrl,jdbcType=VARCHAR},
+      search_little_pic_url = #{searchLittlePicUrl,jdbcType=VARCHAR},
+      cart_pic_url = #{cartPicUrl,jdbcType=VARCHAR},
+      cart_pic_desc = #{cartPicDesc,jdbcType=VARCHAR}
+    where product_pic_id = #{productPicId,jdbcType=INTEGER}
+  </update>
+</mapper>
